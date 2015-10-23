@@ -19,7 +19,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'bridgeit-auth',
 
       ready: function(){
-        this.loggedIn = bridgeit.io.auth.isLoggedIn();
+        var loggedIn = bridgeit.io.auth.isLoggedIn();
+        console.log('bridgeit-auth.loggedIn: ' + loggedIn);
+        this.loggedIn = loggedIn;
       },
 
       properties: {
@@ -70,7 +72,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           password: detail.password,
           host: this.host,
           usePushService: true
-        }).then((authResponse) => {
+        }).then((authResponse) => { //jshint ignore:line
           this.loggedIn = true;
         }).catch((error) => {
           this.error = error;
