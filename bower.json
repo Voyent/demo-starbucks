@@ -11,10 +11,16 @@
     "bridgeit.io.js": "https://github.com/bridgeit/bridgeit.io.js.git#dev",
     "bridgeit.js": "https://github.com/bridgeit/bridgeit.js.git#1.0.7",
     "bluebird": "https://github.com/jakearchibald/es6-promise",
-    "es6-promise": "3.0.2"
+    "es6-promise": "3.0.2",
+    "bridgeit-web-components": "#gh-pages"
   },
   "devDependencies": {
     "web-component-tester": "*",
     "test-fixture": "PolymerElements/test-fixture#^1.0.0"
+  },
+  "resolutions": {
+    "bridgeit-web-components": "master",
+    "bridgeit.io.js": "dev",
+    "bridgeit.js": "1.0.7"
   }
 }
