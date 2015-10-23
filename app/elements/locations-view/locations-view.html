@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/bridgeit-web-components/bridgeit-locations/bridgeit-locations.html">
 
 <dom-module id="locations-view">
   <template>
@@ -17,7 +18,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
-    <h2 class="page-title">Locations</h2>
+    <template is="dom-if" if="{{visible}}">
+      <h2 class="page-title">Locations</h2>
+      <bridgeit-locations></bridgeit-locations>
+    </template>
   </template>
   <script>
   (function() {
@@ -27,9 +31,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'locations-view',
 
       properties: {
-        foo: {
-          type: String,
-          value: 'locations-view',
+        visible: {
+          type: Boolean,
           notify: true
         }
       }
