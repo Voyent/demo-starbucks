@@ -6,10 +6,18 @@
         @apply(--paper-font-display2);
       }
 
-      @media (max-width: 600px) {
-        .page-title {
-          font-size: 24px!important;
+      @media (max-width: 500px) {
+        .hidden-phone {
+          display: none !important;
         }
+      }
+      @media (min-width: 501px) and (max-width: 900px) {
+        .hidden-tablet {
+          display: none !important;
+        }
+      }
+      @media (min-width: 901px) {
+        
       }
     </style>
   </template>
