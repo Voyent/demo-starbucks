@@ -18,6 +18,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     <h2 class="page-title">Users</h2>
+    <template is="dom-if" if="{{visible}}">
+      <paper-menu>
+        <template is="dom-repeat" items="{{users}}">
+          <paper-item>{{item.username}}</paper-item>
+        </template>
+      </paper-menu>
+    </template>
   </template>
   <script>
   (function() {
@@ -26,12 +33,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'users-view',
 
-      properties: {
-        foo: {
-          type: String,
-          value: 'users-view',
+     properties: {
+        visible: {
+          type: Boolean,
+          notify: true,
+          observer: '_visibleChanged'
+        },
+        users: {
+          type: Array,
           notify: true
         }
+      },
+
+      _visibleChanged: function(){
+        if( this.visible ){
+          this.loadUsers();
+        }
+      },
+
+      loadUsers: function(){
+        bridgeit.io.admin.getRealmUsers().then( (users) => {
+          console.log('found the following users: ' + JSON.stringify(users));
+          this.users = users;
+        }).catch( (error) => {
+          console.log('error loading users for users-view: ' + error);
+          this.fire('bridgeit-error', {error: Error('Could not fetch users list: ' + error.responseText)});
+        });
       }
     });
   })();
