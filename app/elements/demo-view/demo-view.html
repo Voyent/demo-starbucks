@@ -83,11 +83,53 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       /* Height of the scroll area */
+      /*
       .content {
         height: 900px;
+      }*/
+
+      .demo-step-badge{
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        text-align: center;
+        border-radius: 50%;
+        background-color: #737373;
+        color: #FFF;
+        margin-right: 33px;
+        line-height: 27px;
+        vertical-align: middle;
+      }
+      .quote{
+        font-size: 30px;
+        display: inline-block;
+        position: absolute;
+        top: 6px;
+      }
+      .quote:first-child{
+        margin-left: -12px;
+      }
+      .quote:last-child{
+        margin-right: -10px;
+      }
+      #errorToast{
+        background-color: #C70000;
+      }
+      paper-toolbar::shadow #topBar a{
+        margin-left: 10px;
       }
 
       /* Breakpoints */
+      @media (max-width: 500px) {
+        .hidden-phone {
+          display: none !important;
+        }
+      }
+      @media (min-width: 501px) and (max-width: 900px) {
+        .hidden-tablet {
+          display: none !important;
+        }
+      }
 
       /* Small */
       @media (max-width: 600px) {
@@ -97,11 +139,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           width: calc(97.33% - 32px);
           padding-left: 16px;
           padding-right: 16px;
-        }
-
-        paper-toolbar.tall .app-name {
-          font-size: 24px;
-          font-weight: 400;
         }
 
         #drawer .paper-toolbar {
@@ -116,10 +153,48 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           background: white;
         }
 
+        #bottomBar{
+          display: none;
+        }
+
+        paper-toolbar.tall.demo-view .app-name.demo-view{
+          font-size: 33px;
+          margin-left: -10px;
+        }
+
+        .app-name.demo-view img.demo-view {
+            width: 37px;
+            margin: 0px 0px -10px 0px;
+        }
+
       }
 
-      /* Tablet+ */
-      @media (min-width: 601px) {
+      /* Tablet */
+      @media (min-width: 601px) and (max-width: 1099px){
+
+        paper-material {
+          width: calc(98% - 46px);
+          margin-bottom: 32px;
+          padding-left: 30px;
+          padding-right: 30px;
+        }
+
+        #drawer.paper-drawer-panel > [drawer] {
+          border-right: 1px solid rgba(0, 0, 0, 0.14);
+        }
+
+        iron-pages {
+          padding: 48px 62px;
+        }
+
+        .app-name{
+          font-size: 20px;
+        }
+
+      }
+
+       /* Desktop */
+      @media (min-width: 1100px) {
 
         paper-material {
           width: calc(98% - 46px);
@@ -180,30 +255,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       /* desktop-xlarge */
       @media all and (min-width: 1601px) and (max-width: 1920px) { }
 
-      .demo-step-badge{
-        display: inline-block;
-        width: 25px;
-        height: 25px;
-        text-align: center;
-        border-radius: 50%;
-        background-color: #737373;
-        color: #FFF;
-        margin-right: 33px;
-        line-height: 27px;
-        vertical-align: middle;
-      }
-      .quote{
-        font-size: 30px;
-        display: inline-block;
-        position: absolute;
-        top: 6px;
-      }
-      .quote:first-child{
-        margin-left: -12px;
-      }
-      .quote:last-child{
-        margin-right: -10px;
-      }
+      
     </style>
     <template is="dom-if" if="{{visible}}">
        <paper-drawer-panel id="paperDrawerPanel">
@@ -261,12 +313,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <a data-route="notifications" href="/notifications" on-tap="onNotificationsRouteClick">
               <span class="demo-step-badge">8</span>
               <span>Notifications</span>
+            </a>     
+
+            <a data-route="logs" href="/logs" on-tap="onLogsRouteClick">
+              <span class="demo-step-badge">9</span>
+              <span>Logs</span>
             </a>            
 
-            <a on-tap="handleLogout">
-              <iron-icon icon="lock"></iron-icon>
-              <span>Logout</span>
-            </a>
           </paper-menu>
         </paper-scroll-header-panel>
 
@@ -279,19 +332,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <span class="flex"></span>
 
             <!-- Toolbar icons -->
-            <paper-icon-button icon="refresh"></paper-icon-button>
-            <paper-icon-button icon="search"></paper-icon-button>
+            <template is="dom-if" if="{{showCloudPushLink(cloudPushCompatible, cloudPushRegistered)}}">
+              <a on-tap="handleRegisterCloudPush">
+                <iron-icon icon="cloud-download"></iron-icon>
+                <span class="hidden-phone">Register for Cloud Push</span>
+              </a>
+            </template>
+            <a on-tap="handleLogout">
+              <iron-icon icon="lock-open"></iron-icon>
+              <span class="hidden-phone">Logout</span>
+            </a>
 
             <!-- Application name -->
             <div class="middle middle-container center horizontal layout">
               <div class="app-name">
                 <img src="/images/footer-logo.png"/>
-                BridgeIt Starbucks Demo
+                Starbucks Demo
               </div>
             </div>
 
             <!-- Application sub title -->
-            <div class="bottom bottom-container center horizontal layout">
+            <div class="bottom bottom-container center horizontal layout hidden-phone">
               <div class="bottom-title paper-font-subhead"><span class="quote">&ldquo;</span>To inspire and nurture the human spirit – one person, one cup and one neighborhood at a time.<span class="quote">&rdquo;</span>&nbsp;&nbsp;&nbsp;- Starbucks Motto</div>
             </div>
 
@@ -306,11 +367,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </section>
 
               <section data-route="users">
-                <users-view></users-view>
+                <users-view visible="{{isEqual('users', route)}}"></users-view>
               </section>
 
               <section data-route="locations">
-                <locations-view></locations-view>
+                <locations-view visible="{{isEqual('locations', route)}}"></locations-view>
               </section>
 
               <section data-route="actions">
@@ -318,7 +379,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </section>
 
               <section data-route="routes">
-                <routes-view></routes-view>
+                <routes-view visible="{{isEqual('routes', route)}}"></routes-view>
               </section>
              
               <section data-route="context">
@@ -337,14 +398,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <notifications-view></notifications-view>
               </section>
 
+              <section data-route="logs">
+                <logs-view visible="{{isEqual('logs', route)}}"></logs-view>
+              </section>
+
             </iron-pages>
           </div>
         </paper-scroll-header-panel>
       </paper-drawer-panel>
 
       <paper-toast id="toast">
-        <span class="toast-hide-button" role="button" tabindex="0" onclick="app.$.toast.hide()">Ok</span>
+        <span class="toast-hide-button" role="button" tabindex="0" onclick="app.$.toast.hide()">{{message}}</span>
       </paper-toast>
+
+       <paper-toast id="errorToast" duration="20000">
+        <span class="toast-hide-button" role="button" tabindex="0" onclick="app.$.errorToast.hide()">{{error}}</span>
+      </paper-toast>
+
     </template>
   </template>
   <script>
@@ -355,7 +425,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'demo-view',
 
       ready: function(){
-        this.route = 'home';
+        //this.route = 'home';
+
+        //error handling
+        this.addEventListener('bridgeit-error',  (e) => {
+          console.log('handling bridgeit-error: ' + e.detail.error);
+          var errorMessage;
+          if( e.detail.error ){
+            if( e.detail.error.message ){
+              errorMessage = e.detail.error.message;
+            }
+            if( e.detail.error.responseText ){
+              errorMessage = e.detail.error.responseText;
+            }
+          }
+          
+          this.error = 'Error: ' + errorMessage;
+          this.querySelector('#errorToast').show();
+        });
+
+        //check cloud push status
+        this.cloudPushRegistered = bridgeit.isRegistered();
+
+        //mobile
+        this.cloudPushCompatible = bridgeit.isIOS() || bridgeit.isAndroid();
       },
 
       properties: {
@@ -368,6 +461,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           notify: true,
           type: String,
 
+        },
+
+        message: {
+          notify: true,
+          type: String
+        },
+
+        error: {
+          notify: true,
+          type: String
+        },
+
+        cloudPushRegistered: {
+          notify: true,
+          type: Boolean,
+          reflectToAttribute: true
+        },
+
+        cloudPushCompatible: {
+          notify: true,
+          type: Boolean,
+          reflectToAttribute: true
         }
       },
 
@@ -426,6 +541,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       onOthersRouteClick: function(){
         this.fire('onDataRouteClick');
         this.route = 'others';
+      },
+
+      onLogsRouteClick: function(){
+        this.fire('onDataRouteClick');
+        this.route = 'logs';
+      },
+
+      isEqual: function(arg1, arg2){
+        return arg1 === arg2;
+      },
+
+      handleRegisterCloudPush: function(){
+        if(( bridgeit.isIOS || bridgeit.isAndroid() ) &&  !bridgeit.isRegistered()){
+          var callbackName = 'demo-starbucks';
+          window[callbackName] = function(){
+            //TODO update app state on push callback    
+          };
+          
+          bridgeit.register('_reg', callbackName);
+        }
+      },
+
+      showCloudPushLink: function(cloudPushCompatible, cloudPushRegistered){
+        var showCloudPushLink = cloudPushCompatible && !cloudPushRegistered;
+        console.log('showCloudPushLink(' + cloudPushCompatible + ', ' + cloudPushRegistered + ') =' + showCloudPushLink);
+        return showCloudPushLink;
       }
     });
   })();
