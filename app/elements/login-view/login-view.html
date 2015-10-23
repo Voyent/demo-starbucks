@@ -31,25 +31,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         paper-card{
           width: 100%;
         }
+        paper-card::shadow .header.paper-card{
+          background-color: #F44336;
+        }
+        paper-card::shadow .header.paper-card .title-text.paper-card{
+          color: #FFF;
+        }
         paper-button {
           padding:0;
+          background-color: #0DB708;
         }
         paper-button::shadow .button-content {
           padding:0;
         }
         paper-button button {
-          padding:1em;
+          padding: 0.7em 0.8em;
           font: inherit;
           background-color: transparent;
           border-color: transparent;
+          color: #FFF;
+          outline: none;
         }
         paper-button button::-moz-focus-inner {
           border: 0;
         }
+        paper-icon-button{
+          height: 35px;
+          width: 35px;
+        }
+        paper-input{
+          --paper-input-container-focus-color: #000067;
+        }
+       
       </style>
       <div class="login-view-container">
         <form on-submit="handleLogin">
-          <paper-card heading="Sign In">
+          <paper-card heading="Starbucks Demo Sign In">
             <div class="card-content">
               <paper-input label="Username" placeholder="Enter your username" value="{{username}}">
                  <paper-icon-button suffix icon="clear" on-click="_clearUsername" tabindex="-1"></paper-icon-button>
@@ -88,7 +105,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
-      handleLogin: function(e, detail){
+      handleLogin: function(e){
         console.log('login-view.handleLogin() ' + this.username + ', ' + this.password);
         this.fire('doLogin', {username: this.username, password: this.password});
         e.preventDefault();
