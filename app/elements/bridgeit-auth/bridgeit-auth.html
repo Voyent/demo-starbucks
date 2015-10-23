@@ -55,7 +55,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         error: {
           notify: true,
-          type: String
+          type: String,
+          reflectToAttribute: true
         }
       },
 
@@ -65,6 +66,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       login: function(e, detail){
         console.log('bridgeit-auth.login()');
+        if( !detail.username ){
+          this.error = 'Missing username';
+          return;
+        }
+        if( !detail.password ){
+          this.error = 'Missing password';
+          return;
+        }
         bridgeit.io.auth.connect({
           account: this.account,
           realm: this.realm,
@@ -75,7 +84,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }).then((authResponse) => { //jshint ignore:line
           this.loggedIn = true;
         }).catch((error) => {
-          this.error = error;
+          this.error = error.responseText;
+          console.log('bridgeit-auth#login() error');
+          this.fire('bridgeit-error', {error: Error('Failed login: ' + error.responseText)});
         });
       },
       logout: function(){

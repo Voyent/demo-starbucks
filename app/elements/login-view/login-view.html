@@ -13,6 +13,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower-components/iron-form/iron-form.html">
 
 <dom-module id="login-view">
   <template>
@@ -65,18 +66,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        
       </style>
       <div class="login-view-container">
-        <form on-submit="handleLogin">
+        <form is="iron-form" id="loginForm" on-submit="handleLogin">
           <paper-card heading="Starbucks Demo Sign In">
             <div class="card-content">
-              <paper-input label="Username" placeholder="Enter your username" value="{{username}}">
+              <paper-input label="Username" required placeholder="Enter your username" value="{{username}}">
                  <paper-icon-button suffix icon="clear" on-click="_clearUsername" tabindex="-1"></paper-icon-button>
               </paper-input>
-              <paper-input type="password" label="Password" placeholder="Enter your password" value="{{password}}">
+              <paper-input type="password" required label="Password" placeholder="Enter your password" value="{{password}}">
                 <paper-icon-button suffix icon="clear" on-click="_clearPassword" tabindex="-1"></paper-icon-button>
               </paper-input>
             </div>
             <div class="card-actions" style="text-align: right">
-             <paper-button type="submit" raised colored on-click="handleLogin"><button>Go!</button></paper-button>
+              <div style="float:left; color: red"><span>{{error}}</span></div>
+              <paper-button type="submit" raised colored on-click="handleLogin"><button>Go!</button></paper-button>
             </div>
           </paper-card>
         </form>
@@ -90,6 +92,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'login-view',
 
+      behaviors: [
+        Polymer.IronFormElementBehavior,
+        Polymer.IronValidatableBehavior
+      ],
+
       properties: {
          username: {
           notify: true,
@@ -102,6 +109,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         visible: {
           notify: true,
           type: Boolean
+        },
+        error: {
+          notify: true,
+          type: String
         }
       },
 
@@ -117,7 +128,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _clearUsername: function(){
         this.username = '';
+      },
+
+      // Overidden from Polymer.IronValidatableBehavior. Will set the `invalid`
+      // attribute automatically, which should be used for styling.
+      _getValidity: function() {
+        return !!this.password && !!this.username;
       }
+
+
     });
   })();
   </script>
