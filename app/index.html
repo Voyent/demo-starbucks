@@ -16,7 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="generator" content="Polymer Starter Kit" />
-  <title>Polymer Starter Kit</title>
+  <title>BridgeIt Starbucks Demo</title>
   <link rel="icon" type="image/png" href="favicon.png"/>
   <!-- Place favicon.ico in the `app/` directory -->
 
@@ -76,10 +76,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- Main Content -->
   <div id="mainContainer">
 
-    
-
-    <bridgeit-auth account="muvyouDev" realm="judging" host="api.bridgeit.mobi" logged-in="{{isLoggedIn}}">
-      <login-view visible="{{!isLoggedIn}}" username="{{username}}" password="{{password}}"></login-view>
+    <bridgeit-auth account="muvyouDev" realm="judging" host="api.bridgeit.mobi" logged-in="{{isLoggedIn}}" error="{{loginError}}">
+      <login-view visible="{{!isLoggedIn}}" username="{{username}}" password="{{password}}" error="{{loginError}}"></login-view>
       <demo-data></demo-data>
       <demo-view visible="{{isLoggedIn}}"></demo-view>
     </bridgeit-auth>
