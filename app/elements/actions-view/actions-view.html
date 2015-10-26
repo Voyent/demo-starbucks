@@ -19,7 +19,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     <h2 class="page-title">Actions</h2>
-    <bridgeit-action-editor></bridgeit-action-editor>
+    <template is="dom-if" if="{{visible}}">
+      <bridgeit-action-editor></bridgeit-action-editor>
+    </template>
   </template>
   <script>
   (function() {
@@ -29,9 +31,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'actions-view',
 
       properties: {
-        foo: {
-          type: String,
-          value: 'actions-view',
+        visible: {
+          type: Boolean,
           notify: true
         }
       }

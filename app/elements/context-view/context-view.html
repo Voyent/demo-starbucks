@@ -18,6 +18,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     <h2 class="page-title">Context</h2>
+    <div class="vertical center-justified layout">
+      <div class="vertical-section">
+        <div>Oxygen</div>
+        <paper-slider value="{{currentTemp}}" id="currentTempSlider"></paper-slider><br><br>
+        <div>Argon</div>
+        <paper-slider value="{{thresholdTemp}}" id="thresholdTempSlider"></paper-slider><br><br>
+      </div>
+    </div>
   </template>
   <script>
   (function() {
@@ -26,12 +34,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'context-view',
 
+      observers: ['tempChanged(currentTemp,thresholdTemp)'],
+
       properties: {
-        foo: {
-          type: String,
-          value: 'context-view',
-          notify: true
-        }
+        currentTemp: {type: Number, notify: true, value: 72},
+        thresholdTemp: {type: Number, notify: true, value: 60},
+      },
+
+      tempChanged: function(currentTemp,thresholdTemp){
+        this.fire('temp-changed', {currentTemp: currentTemp, thresholdTemp: thresholdTemp});
       }
     });
   })();

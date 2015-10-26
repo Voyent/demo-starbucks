@@ -295,7 +295,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <span>Routes</span>
             </a>
 
-            <a data-route="context" href="/routes" on-tap="onContextRouteClick">
+            <a data-route="context" href="/context" on-tap="onContextRouteClick">
               <span class="demo-step-badge">5</span>
               <span>Context</span>
             </a>      
@@ -374,7 +374,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </section>
 
               <section data-route="actions">
-                <actions-view></actions-view>
+                <actions-view visible="{{isEqual('actions', route)}}">></actions-view>
               </section>
 
               <section data-route="routes">
@@ -382,7 +382,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </section>
              
               <section data-route="context">
-                <context-view></context-view>
+                <context-view currentTemp="{{currentTemp}}" thresholdTemp="{{thresholdTemp}}"></context-view>
               </section>
 
               <section data-route="others">
@@ -414,6 +414,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <span class="toast-hide-button" role="button" tabindex="0" onclick="app.$.errorToast.hide()">{{error}}</span>
       </paper-toast>
 
+      <demo-data currentTemp="{{currentTemp}}" thresholdTemp="{{thresholdTemp}}"></demo-data>
     </template>
   </template>
   <script>
@@ -441,6 +442,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           
           this.error = 'Error: ' + errorMessage;
           this.querySelector('#errorToast').show();
+        });
+
+        //temperature event handling
+        this.addEventListener('temp-changed',  (e) => {
+          console.log('handling temp-changed: ' + JSON.stringify(e.detail));
+          this.message = 'Temperture changed. Current: ' + e.detail.currentTemp + 'deg, Threshold: ' + e.detail.thresholdTemp + 'deg.';
+          this.querySelector('#toast').show();
         });
 
         //check cloud push status
