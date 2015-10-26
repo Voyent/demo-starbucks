@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
 
 <dom-module id="context-view">
   <template>
@@ -20,10 +21,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <h2 class="page-title">Context</h2>
     <div class="vertical center-justified layout">
       <div class="vertical-section">
-        <div>Oxygen</div>
-        <paper-slider value="{{currentTemp}}" id="currentTempSlider"></paper-slider><br><br>
-        <div>Argon</div>
-        <paper-slider value="{{thresholdTemp}}" id="thresholdTempSlider"></paper-slider><br><br>
+        <div>Current Temperature</div>
+        <paper-slider value="{{currentTemp}}" id="currentTempSlider"></paper-slider>
+        &nbsp;<span>{{currentTemp}}</span>&deg;
+        <br><br>
+        <div>Threshold Temperature</div>
+        <paper-slider value="{{thresholdTemp}}" id="thresholdTempSlider"></paper-slider>
+        &nbsp;<span>{{thresholdTemp}}</span>&deg;
+        <br><br>
       </div>
     </div>
   </template>

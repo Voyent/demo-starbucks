@@ -80,7 +80,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           username: detail.username,
           password: detail.password,
           host: this.host,
-          usePushService: true
+          usePushService: false
         }).then((authResponse) => { //jshint ignore:line
           bridgeit.io.setCurrentRealm(this.realm);
           this.loggedIn = true;
