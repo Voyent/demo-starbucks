@@ -76,12 +76,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         bridgeit.io.auth.connect({
           account: this.account,
-          realm: this.realm,
+          //realm: this.realm,
           username: detail.username,
           password: detail.password,
           host: this.host,
           usePushService: true
         }).then((authResponse) => { //jshint ignore:line
+          bridgeit.io.setCurrentRealm(this.realm);
           this.loggedIn = true;
         }).catch((error) => {
           this.error = error.responseText;
