@@ -12,7 +12,7 @@
     "bridgeit.js": "https://github.com/bridgeit/bridgeit.js.git#1.0.7",
     "bluebird": "https://github.com/jakearchibald/es6-promise",
     "es6-promise": "3.0.2",
-    "bridgeit-web-components": "#gh-pages"
+    "bridgeit-web-components": "https://github.com/bridgeit/bridgeit-web-components.git#master"
   },
   "devDependencies": {
     "web-component-tester": "*",
