@@ -78,7 +78,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <bridgeit-auth account="demos" realm="starbucks" host="dev.bridgeit.io" logged-in="{{isLoggedIn}}" error="{{loginError}}">
       <login-view visible="{{!isLoggedIn}}" username="{{username}}" password="{{password}}" error="{{loginError}}"></login-view>
       <demo-data></demo-data>
-      <demo-view visible="{{isLoggedIn}}"></demo-view>
+      <demo-view id="demoView" visible="{{isLoggedIn}}"></demo-view>
     </bridgeit-auth>
 
   </div>
