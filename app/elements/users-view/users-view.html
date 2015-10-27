@@ -9,21 +9,50 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../styles/shared-styles.html">
 
 <dom-module id="users-view">
   <template>
-    <style>
+    <style include="shared-styles">
       :host {
         display: block;
+      }
+      paper-menu{
+        padding: 0;
+      }
+      paper-icon-item{
+        width: 100%;
+        display: block;
+        border-bottom: 1px solid #eee;
+        padding: 8px;
+      }
+      iron-icon{
+        vertical-align: top;
+      }
+      .item-body{
+        display: inline-block;
       }
     </style>
     <h2 class="page-title">Users</h2>
     <template is="dom-if" if="{{visible}}">
+      <paper-material>
       <paper-menu>
         <template is="dom-repeat" items="{{users}}">
-          <paper-item>{{item.username}}</paper-item>
+          <paper-icon-item>
+            <iron-icon icon="account-circle" item-icon></iron-icon>
+            <div class="item-body">
+              <div>Username: <span>{{item.username}}</span></div>
+              <div>
+                <small>
+                  <span>{{item.firstname}}</span> <span>{{item.lastname}}</span>
+                  <span>{{item.email}}</span>
+                </small>
+              </div>
+            <div>
+          </paper-icon-item>
         </template>
       </paper-menu>
+      </paper-material>
     </template>
   </template>
   <script>
