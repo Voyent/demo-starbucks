@@ -29,15 +29,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   });
 
   // Startup the Notification Push Listener after login
-  /*
   window.addEventListener('onAfterLogin', function(){
     console.log('onAfterLogin callback: configuring notifications');
     setupNotificationListener();
   });
-
-  if( bridgeit.io.auth.isLoggedIn()){
-    setTimeout(setupNotificationListener, 1000);
-  }*/
 
   function setupNotificationListener(){
     bridgeit.xio.push.addListener(function (payload) {
@@ -54,6 +49,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
     bridgeit.xio.push.join('admin');
     bridgeit.xio.push.attach('http://dev.bridgeit.io/pushio/demos/realms/starbucks', bridgeit.io.auth.getLastKnownUsername());
+  }
+
+  if( bridgeit.io.auth.isLoggedIn()){
+    setTimeout(setupNotificationListener, 1000);
   }
 
   // See https://github.com/Polymer/polymer/issues/1381
