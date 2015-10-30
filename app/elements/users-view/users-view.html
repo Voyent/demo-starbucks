@@ -36,23 +36,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <h2 class="page-title">Users</h2>
     <template is="dom-if" if="{{visible}}">
       <paper-material>
-      <paper-menu>
-        <template is="dom-repeat" items="{{users}}">
-          <paper-icon-item>
-            <iron-icon icon="account-circle" item-icon></iron-icon>
-            <div class="item-body">
-              <div>Username: <span>{{item.username}}</span></div>
+        <paper-menu>
+          <template is="dom-repeat" items="{{users}}">
+            <paper-icon-item>
+              <iron-icon icon="account-circle" item-icon></iron-icon>
+              <div class="item-body">
+                <div>Username: <span>{{item.username}}</span></div>
+                <div>
+                  <small>
+                    <span>{{item.firstname}}</span> <span>{{item.lastname}}</span>
+                    <span>{{item.email}}</span>
+                    <span>{{item.gender}}</span>
+                  </small>
+                </div>
               <div>
-                <small>
-                  <span>{{item.firstname}}</span> <span>{{item.lastname}}</span>
-                  <span>{{item.email}}</span>
-                  <span>{{item.gender}}</span>
-                </small>
-              </div>
-            <div>
-          </paper-icon-item>
-        </template>
-      </paper-menu>
+            </paper-icon-item>
+          </template>
+        </paper-menu>
       </paper-material>
     </template>
   </template>

@@ -28,6 +28,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     console.log('Our app is ready to rock!');
   });
 
+  // Startup the Notification Push Listener after login
+  window.addEventListener('onAfterLogin', function(){
+    console.log('onAfterLogin callback: configuring notifications');
+    setupNotificationListener();
+  });
+
+  if( bridgeit.io.auth.isLoggedIn()){
+    setTimeout(setupNotificationListener, 1000);
+  }
+
+  function setupNotificationListener(){
+    bridgeit.xio.push.addListener(function (payload) {
+        var enhancedMessage = {
+          ts: new Date().toISOString(),
+          group: payload.group,
+          message: payload.message
+        };
+        console.log('Notification: ', enhancedMessage);
+        var demoView = app.$.demoView;
+        demoView.$$('demo-data').push('notifications', enhancedMessage);
+        demoView.message = enhancedMessage.message;
+        demoView.querySelector('#toast').show();
+    });
+    bridgeit.xio.push.join('admin');
+    bridgeit.xio.push.attach('http://dev.bridgeit.io/pushio/demos/realms/starbucks', bridgeit.io.auth.getLastKnownUsername());
+  }
+
   // See https://github.com/Polymer/polymer/issues/1381
   window.addEventListener('WebComponentsReady', function() {
     // imports are loaded and elements have been registered

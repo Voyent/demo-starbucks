@@ -17,8 +17,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+      .notifications paper-item{
+        font-size: 12px;
+      }
+      .notifications paper-item cell{
+        display: inline-block;
+        padding: 2px;
+        white-space: normal;
+      }
+      .notification-ts{
+        width: 20%;
+      }
+      .notification-group{
+        width: 40%;
+      }
+      .notification-message{
+        width: 60%;
+      }
     </style>
     <h2 class="page-title">Notifications</h2>
+    <paper-material>
+        <paper-menu class="notifications">
+          <template is="dom-repeat" items="[[notifications]]">
+            <paper-item>
+              <span class="cell notification-ts">{{item.ts}}</span>
+              <span class="cell notification-group">{{item.group}}</span>
+              <span class="cell notification-message">{{item.message}}</span>
+            </paper-item>
+          </template>
+        </paper-menu>
+      </paper-material>
   </template>
   <script>
   (function() {
@@ -28,12 +56,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'notifications-view',
 
       properties: {
-        foo: {
-          type: String,
-          value: 'notifications-view',
-          notify: true
-        }
-      }
+        notifications: { type: Array, notify: true}
+      },
+      
     });
   })();
   </script>

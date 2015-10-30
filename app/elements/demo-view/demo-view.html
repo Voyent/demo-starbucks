@@ -383,7 +383,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </section>
              
               <section data-route="context">
-                <context-view currentTemp="{{currentTemp}}" thresholdTemp="{{thresholdTemp}}"></context-view>
+                <context-view 
+                  current-temp="{{currentTemp}}" 
+                  threshold-temp="{{thresholdTemp}}"
+                  hot-male-template="{{hotMaleTemplate}}"
+                  cold-male-template="{{coldMaleTemplate}}"
+                  hot-female-template="{{hotFemaleTemplate}}"
+                  cold-female-template="{{coldFemaleTemplate}}">
+                </context-view>
               </section>
 
               <section data-route="others">
@@ -395,7 +402,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </section>
 
               <section data-route="notifications">
-                <notifications-view></notifications-view>
+                <notifications-view notifications="[[notifications]]"></notifications-view>
               </section>
 
               <section data-route="logs">
@@ -415,7 +422,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <span class="toast-hide-button" role="button" tabindex="0" onclick="app.$.errorToast.hide()">{{error}}</span>
       </paper-toast>
 
-      <demo-data currentTemp="{{currentTemp}}" thresholdTemp="{{thresholdTemp}}"></demo-data>
+      <demo-data 
+        current-temp="{{currentTemp}}" 
+        threshold-temp="{{thresholdTemp}}"
+        hot-male-template="{{hotMaleTemplate}}"
+        cold-male-template="{{coldMaleTemplate}}"
+        hot-female-template="{{hotFemaleTemplate}}"
+        cold-female-template="{{coldFemaleTemplate}}"
+        notifications="{{notifications}}">
+      </demo-data>
     </template>
   </template>
   <script>
@@ -495,6 +510,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       handleLogout: function(){
+        bridgeit.xio.push.removeListener();
         bridgeit.io.auth.disconnect();
         this.visible = false;
       },

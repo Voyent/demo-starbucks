@@ -21,6 +21,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       properties: {
         currentTemp: {type: Number, notify: true},
         thresholdTemp: {type: Number, notify: true},
+        notifications: {type: Array, value: [], notify: true},
+        hotMaleTemplate: {type: String, notify: true},
+        coldMaleTemplate: {type: String, notify: true},
+        hotFemaleTemplate: {type: String, notify: true},
+        coldFemaleTemplate: {type: String, notify: true},
+        
       }
     });
   })();
