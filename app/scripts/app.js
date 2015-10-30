@@ -47,12 +47,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         demoView.message = enhancedMessage.message;
         demoView.querySelector('#toast').show();
     });
-    bridgeit.xio.push.join('admin');
+    window.joinAppropriatePushGroup(); //delegates to user.js or admin.js
     bridgeit.xio.push.attach('http://dev.bridgeit.io/pushio/demos/realms/starbucks', bridgeit.io.auth.getLastKnownUsername());
   }
 
   if( bridgeit.io.auth.isLoggedIn()){
-    setTimeout(setupNotificationListener, 1000);
+    setTimeout(setupNotificationListener, 2000);
   }
 
   // See https://github.com/Polymer/polymer/issues/1381

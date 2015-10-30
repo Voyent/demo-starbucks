@@ -13,6 +13,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="demo-view">
   <template>
+    <div>test</div>
     <style include="shared-styles">
       :host {
         display: block;
@@ -269,50 +270,63 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <span>Home</span>
             </a>
 
-            <a data-route="users" href="/users" on-tap="onUsersRouteClick">
-              <span class="demo-step-badge">1</span>
-              <span>Users</span>
-            </a>
+            <template is="dom-if" if="{{isAdmin}}">
 
-            <a data-route="locations" href="/locations" on-tap="onLocationsRouteClick">
-              <span class="demo-step-badge">2</span>
-              <span>Locations</span>
-            </a>
+              <a data-route="users" href="/users" on-tap="onUsersRouteClick">
+                <span class="demo-step-badge">1</span>
+                <span>Users</span>
+              </a>
 
-            <a data-route="actions" href="/actions" on-tap="onActionsRouteClick">
-              <span class="demo-step-badge">3</span>
-              <span>Actions</span>
-            </a>
+              <a data-route="locations" href="/locations" on-tap="onLocationsRouteClick">
+                <span class="demo-step-badge">2</span>
+                <span>Locations</span>
+              </a>
 
-            <a data-route="routes" href="/routes" on-tap="onRoutesRouteClick">
-              <span class="demo-step-badge">4</span>
-              <span>Routes</span>
-            </a>
+              <a data-route="actions" href="/actions" on-tap="onActionsRouteClick">
+                <span class="demo-step-badge">3</span>
+                <span>Actions</span>
+              </a>
 
-            <a data-route="context" href="/context" on-tap="onContextRouteClick">
-              <span class="demo-step-badge">5</span>
-              <span>Context</span>
-            </a>      
+              <a data-route="routes" href="/routes" on-tap="onRoutesRouteClick">
+                <span class="demo-step-badge">4</span>
+                <span>Routes</span>
+              </a>
 
-            <a data-route="others" href="/others" on-tap="onOthersRouteClick">
-              <span class="demo-step-badge">6</span>
-              <span>Others</span>
-            </a>   
+              <a data-route="context" href="/context" on-tap="onContextRouteClick">
+                <span class="demo-step-badge">5</span>
+                <span>Context</span>
+              </a>      
 
-            <a data-route="events" href="/events" on-tap="onEventsRouteClick">
-              <span class="demo-step-badge">7</span>
-              <span>Events</span>
-            </a>   
+              <a data-route="others" href="/others" on-tap="onOthersRouteClick">
+                <span class="demo-step-badge">6</span>
+                <span>Others</span>
+              </a>   
 
-            <a data-route="notifications" href="/notifications" on-tap="onNotificationsRouteClick">
-              <span class="demo-step-badge">8</span>
-              <span>Notifications</span>
-            </a>     
+              <a data-route="events" href="/events" on-tap="onEventsRouteClick">
+                <span class="demo-step-badge">7</span>
+                <span>Events</span>
+              </a>   
 
-            <a data-route="logs" href="/logs" on-tap="onLogsRouteClick">
-              <span class="demo-step-badge">9</span>
-              <span>Logs</span>
-            </a>            
+              <a data-route="notifications" href="/notifications" on-tap="onNotificationsRouteClick">
+                <span class="demo-step-badge">8</span>
+                <span>Notifications</span>
+              </a>     
+
+              <a data-route="logs" href="/logs" on-tap="onLogsRouteClick">
+                <span class="demo-step-badge">9</span>
+                <span>Logs</span>
+              </a>
+
+            </template>
+
+            <template is="dom-if" if="{{isUser}}">
+
+              <a data-route="notifications" href="/notifications" on-tap="onNotificationsRouteClick">
+                <span class="demo-step-badge">1</span>
+                <span>Notifications</span>
+              </a>  
+
+            </template>          
 
           </paper-menu>
         </paper-scroll-header-panel>
@@ -340,7 +354,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <!-- Application name -->
             <div class="middle middle-container center horizontal layout">
               <div class="app-name">
-                Starbucks Demo
+                Starbucks Demo <small>(<span>[[username]]</span>)</small>
               </div>
             </div>
 
@@ -359,48 +373,60 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <home-view></home-view>
               </section>
 
-              <section data-route="users">
-                <users-view visible="{{isEqual('users', route)}}"></users-view>
-              </section>
+              <template is="dom-if" if="{{isAdmin}}">
 
-              <section data-route="locations">
-                <locations-view visible="{{isEqual('locations', route)}}"></locations-view>
-              </section>
+                <section data-route="users">
+                  <users-view visible="{{isEqual('users', route)}}"></users-view>
+                </section>
 
-              <section data-route="actions">
-                <actions-view visible="{{isEqual('actions', route)}}">></actions-view>
-              </section>
+                <section data-route="locations">
+                  <locations-view visible="{{isEqual('locations', route)}}"></locations-view>
+                </section>
 
-              <section data-route="routes">
-                <routes-view visible="{{isEqual('routes', route)}}"></routes-view>
-              </section>
-             
-              <section data-route="context">
-                <context-view 
-                  current-temp="{{currentTemp}}" 
-                  threshold-temp="{{thresholdTemp}}"
-                  hot-male-template="{{hotMaleTemplate}}"
-                  cold-male-template="{{coldMaleTemplate}}"
-                  hot-female-template="{{hotFemaleTemplate}}"
-                  cold-female-template="{{coldFemaleTemplate}}">
-                </context-view>
-              </section>
+                <section data-route="actions">
+                  <actions-view visible="{{isEqual('actions', route)}}">></actions-view>
+                </section>
 
-              <section data-route="others">
-                <others-view></others-view>
-              </section>
+                <section data-route="routes">
+                  <routes-view visible="{{isEqual('routes', route)}}"></routes-view>
+                </section>
+               
+                <section data-route="context">
+                  <context-view 
+                    current-temp="{{currentTemp}}" 
+                    threshold-temp="{{thresholdTemp}}"
+                    hot-male-template="{{hotMaleTemplate}}"
+                    cold-male-template="{{coldMaleTemplate}}"
+                    hot-female-template="{{hotFemaleTemplate}}"
+                    cold-female-template="{{coldFemaleTemplate}}">
+                  </context-view>
+                </section>
 
-              <section data-route="events">
-                <events-view></events-view>
-              </section>
+                <section data-route="others">
+                  <others-view></others-view>
+                </section>
 
-              <section data-route="notifications">
-                <notifications-view notifications="[[notifications]]"></notifications-view>
-              </section>
+                <section data-route="events">
+                  <events-view></events-view>
+                </section>
 
-              <section data-route="logs">
-                <logs-view visible="{{isEqual('logs', route)}}"></logs-view>
-              </section>
+                <section data-route="notifications">
+                  <notifications-view notifications="[[notifications]]"></notifications-view>
+                </section>
+
+                <section data-route="logs">
+                  <logs-view visible="{{isEqual('logs', route)}}"></logs-view>
+                </section>
+
+              </template>
+
+              <template is="dom-if" if="{{isUser}}">
+
+                <section data-route="notifications">
+                  <notifications-view notifications="[[notifications]]"></notifications-view>
+                </section>
+
+              </template>
 
             </iron-pages>
           </div>
@@ -468,6 +494,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       properties: {
+        isAdmin: {
+          notify: true,
+          type: Boolean
+        },
+
+        isUser: {
+          type: Boolean,
+          value: true,
+          computed: 'computeIsUser(isAdmin)'
+        },
+
         visible: {
           notify: true,
           type: Boolean
@@ -499,6 +536,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           notify: true,
           type: Boolean,
           reflectToAttribute: true
+        },
+
+        username: {
+          notify: true,
+          type: String
         }
       },
 
@@ -584,6 +626,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var showCloudPushLink = cloudPushCompatible && !cloudPushRegistered;
         console.log('showCloudPushLink(' + cloudPushCompatible + ', ' + cloudPushRegistered + ') =' + showCloudPushLink);
         return showCloudPushLink;
+      },
+
+      computeIsUser: function(isAdmin){
+        return !isAdmin;
       }
     });
   })();
