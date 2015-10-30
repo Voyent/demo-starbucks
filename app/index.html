@@ -61,10 +61,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <!-- will be replaced with elements/elements.vulcanized.html -->
   <link rel="import" href="elements/elements.html">
+  <link rel="import" href="../bower_components/bridgeit-web-components/bridgeit-auth-provider/bridgeit-auth-provider.html"/>
+  <link rel="import" href="../bower_components/bridgeit-web-components/bridgeit-login-paper-card/bridgeit-login-paper-card.html"/>
   <!-- endreplace-->
 
   <!-- For shared styles, shared-styles.html import in elements.html -->
-  <style is="custom-style" include="shared-styles"></style>
+  <style is="custom-style" include="shared-styles">
+    bridgeit-login-paper-card{
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-top: 40px;
+    }
+  </style>
 
 </head>
 
@@ -75,11 +84,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- Main Content -->
   <div id="mainContainer">
 
-    <bridgeit-auth account="demos" realm="starbucks" host="dev.bridgeit.io" logged-in="{{isLoggedIn}}" error="{{loginError}}">
-      <login-view visible="{{!isLoggedIn}}" username="{{username}}" password="{{password}}" error="{{loginError}}"></login-view>
-      <demo-view id="demoView" visible="{{isLoggedIn}}"></demo-view>
-    </bridgeit-auth>
-
+    <bridgeit-auth-provider id="authProvider" account="demos" realm="starbucks" 
+      host="dev.bridgeit.io" logged-in="{{isLoggedIn}}" error="{{loginError}}">
+    </bridgeit-auth-provider>
+    <bridgeit-login-paper-card heading="Starbucks Demo Sign In" username="{{username}}" password="{{password}}" error="{{loginError}}"
+      auth-provider="authProvider" submit-label="Login" cancel-label="Cancel" hidden="{{isLoggedIn}}" login-as-admin="true">
+    </bridgeit-login-paper-card>
+    <demo-view id="demoView" visible="{{isLoggedIn}}"></demo-view>
   </div>
 
    
