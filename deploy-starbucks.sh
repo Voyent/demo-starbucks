@@ -5,6 +5,9 @@ HOST=web1d
 #check host and api in config
 rm -rf ./dist
 gulp
+# TODO fix gulpfile.js to add admin.js and user.js
+cp app/scripts/admin.js ./dist/scripts/
+cp app/scripts/user.js ./dist/scripts/
 cd ./dist
 tar -zcvf ../starbucks.tar.gz .
 cd ..

@@ -7,11 +7,11 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-(function(document) {
+(function() {
   'use strict';
 
   window.joinAppropriatePushGroup = function(){
     bridgeit.xio.push.join(bridgeit.io.auth.getLastKnownUsername());
   };
 
-})(document);
+})();
