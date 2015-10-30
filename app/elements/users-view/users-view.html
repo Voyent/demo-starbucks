@@ -46,6 +46,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <small>
                   <span>{{item.firstname}}</span> <span>{{item.lastname}}</span>
                   <span>{{item.email}}</span>
+                  <span>{{item.gender}}</span>
                 </small>
               </div>
             <div>
@@ -84,6 +85,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         bridgeit.io.admin.getRealmUsers().then( (users) => {
           console.log('found the following users: ' + JSON.stringify(users));
           this.users = users;
+          this.users.forEach(function(user){
+            try{
+              user.gender = JSON.parse(user.custom).gender;
+            }
+            catch(e){
+              console.error(e);
+            }
+          });
         }).catch( (error) => {
           console.log('error loading users for users-view: ' + error);
           this.fire('bridgeit-error', {error: Error('Could not fetch users list: ' + error.responseText)});
