@@ -29,6 +29,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   });
 
   // Startup the Notification Push Listener after login
+  /*
   window.addEventListener('onAfterLogin', function(){
     console.log('onAfterLogin callback: configuring notifications');
     setupNotificationListener();
@@ -36,7 +37,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   if( bridgeit.io.auth.isLoggedIn()){
     setTimeout(setupNotificationListener, 1000);
-  }
+  }*/
 
   function setupNotificationListener(){
     bridgeit.xio.push.addListener(function (payload) {
