@@ -20,7 +20,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <h2 class="page-title">Actions</h2>
     <template is="dom-if" if="{{visible}}">
-      <bridgeit-action-editor></bridgeit-action-editor>
+      <bridgeit-action-editor>
+        <bridgeit-action-list></bridgeit-action-list>
+      </bridgeit-action-editor>
     </template>
   </template>
   <script>

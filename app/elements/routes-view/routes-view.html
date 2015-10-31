@@ -20,7 +20,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <h2 class="page-title">Routes</h2>
     <template is="dom-if" if="{{visible}}">
-      <bridgeit-location-simulator></bridgeit-location-simulator>
+      <bridgeit-location-simulator>
+        <bridgeit-location-simulations></bridgeit-location-simulations>
+        <bridgeit-location-route></bridgeit-location-route>
+      </bridgeit-location-simulator>
     </template>
   </template>
   <script>
