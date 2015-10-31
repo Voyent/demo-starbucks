@@ -88,7 +88,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <bridgeit-auth-provider id="authProvider" account="demos" realm="starbucks" 
       host="dev.bridgeit.io" logged-in="{{isLoggedIn}}" error="{{loginError}}">
     </bridgeit-auth-provider>
-    <bridgeit-login-paper-card heading="Starbucks Demo Sign In" username="{{username}}" password="{{password}}" error="{{loginError}}"
+    <bridgeit-login-paper-card heading="Starbucks Demo Admin Sign In" username="{{username}}" password="{{password}}" error="{{loginError}}"
       auth-provider="authProvider" submit-label="Login" cancel-label="Cancel" hidden="{{isLoggedIn}}" login-as-admin="true">
     </bridgeit-login-paper-card>
     <demo-view id="demoView" visible="{{isLoggedIn}}" is-admin="true" username="{{username}}"></demo-view>
@@ -114,7 +114,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   </template>
 
-  <script src="scripts/admin.js"></script>
+  <script>
+    window.joinAppropriatePushGroup = function(){
+      bridgeit.xio.push.join('admin');
+    };
+  </script>
   <!-- build:js scripts/app.js -->
   <script src="scripts/app.js"></script>
   <!-- endbuild-->
