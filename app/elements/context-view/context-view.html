@@ -160,11 +160,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'context-view',
 
+      ready: function(){
+        var _this = this;
+        bridgeit.io.documents.findDocuments({query: {type: 'temperature'}}).then(function(results){
+          results.forEach(function(doc){
+            if( doc._id === 'thresholdTemp'){
+              _this.thresholdTemp = doc.value;
+              _this.thresholdTempDoc = doc;
+            }
+            else if( doc._id === 'currentTemp'){
+              _this.currentTemp = doc.value;
+              _this.currentTempDoc = doc;
+            }
+          });
+          _this.loaded = true;
+        });
+      },
+
       observers: ['tempChanged(currentTemp,thresholdTemp)'],
 
       properties: {
-        currentTemp: {type: Number, notify: true, value: 72},
-        thresholdTemp: {type: Number, notify: true, value: 60},
+        loaded: {type: Boolean, notify: true},
+        currentTemp: {type: Number, notify: true},
+        currentTempDoc: {type: Object},
+        thresholdTemp: {type: Number, notify: true},
+        thresholdTempDoc: {type: Object},
         templateHotMale: {type: Object, notify: true},
         templateColdMale: {type: Object, notify: true},
         templateHotFemale: {type: Object, notify: true},
@@ -174,7 +194,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       tempChanged: function(currentTemp,thresholdTemp){
-        this.fire('temp-changed', {currentTemp: currentTemp, thresholdTemp: thresholdTemp});
+        if( this.loaded){
+          var _this = this;
+          this.fire('temp-changed', {currentTemp: currentTemp, thresholdTemp: thresholdTemp});
+          this.currentTempDoc.value = currentTemp;
+          this.thresholdTempDoc.value = thresholdTemp;
+          bridgeit.io.documents.updateDocument({id: this.currentTempDoc._id, document: this.currentTempDoc}).then(function(){
+            return bridgeit.io.documents.updateDocument({id: this.thresholdTempDoc._id, document: this.thresholdTempDoc});
+          }).catch(function(error){
+            _this.fire('bridgeit-error', {error: Error('Temperature update failed: ' + this.error)});
+          });
+        }
       },
 
       editTemplateMaleHot: function(){
