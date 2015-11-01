@@ -31,7 +31,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       .templates .row{
         height: 80px;
-        line-height: 80px;
       }
       .templates .row:first-child{
         height: 40px;
@@ -41,7 +40,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: inline-block;
         width: 40%;
         vertical-align: top;
-        height: 100%;
+        padding: 10px;
+        height: 99%;
       }
       .templates .row > div:first-child{
         font-weight: bold;
@@ -49,14 +49,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       .cell{
         position: relative;
+        background-color: #FFECEC;
       }
       paper-icon-button {
         display: block;
         text-align: center;
         color: var(--default-primary-color);
         position: absolute;
-        top: 10px;
-        right: 10px;
+        top: -10px;
+        right: -8px;
         width: 30px;
         height: 30px;
       }
@@ -77,6 +78,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .templates .row:first-child .tbl-header{
         border-bottom: 1px solid #DDD;
         border-right: 1px solid #DDD;
+      }
+      bridgeit-document-property-text-editor{
+        min-height: 243px;
+        min-width: 546px;
       }
     </style>
     <h2 class="page-title">Context</h2>
@@ -116,12 +121,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="row">
             <div class="tbl-header">Male</div>
             <div class="cell">
-              <bridgeit-document document-id="templateHotMale" attr-to-display="content" document="{{templateHotMale}}">
+              <bridgeit-document document-id="templateMessages" attr-to-display="hotMale" document="{{templateMessagesDoc}}">
               </bridgeit-document>
               <paper-icon-button title="Edit" icon="create" on-click="editTemplateMaleHot"></paper-icon-button>
             </div>
             <div class="cell">
-              <bridgeit-document document-id="templateColdMale" attr-to-display="content" document="{{templateColdMale}}">
+              <bridgeit-document document-id="templateMessages" attr-to-display="coldMale" document="{{templateMessagesDoc}}">
               </bridgeit-document>
               <paper-icon-button title="Edit" icon="create" on-click="editTemplateMaleCold"></paper-icon-button>
             </div>
@@ -129,12 +134,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            <div class="row">
             <div class="tbl-header">Female</div>
             <div class="cell">
-              <bridgeit-document document-id="templateHotFemale" attr-to-display="content" document="{{templateHotFemale}}">
+              <bridgeit-document document-id="templateMessages" attr-to-display="hotFemale" document="{{templateMessagesDoc}}">
               </bridgeit-document>
               <paper-icon-button title="Edit" icon="create" on-click="editTemplateFemaleHot"></paper-icon-button>
             </div>
             <div class="cell">
-              <bridgeit-document document-id="templateColdFemale" attr-to-display="content" document="{{templateColdFemale}}">
+              <bridgeit-document document-id="templateMessages" attr-to-display="coldFemale" document="{{templateMessagesDoc}}">
               </bridgeit-document>
               <paper-icon-button title="Edit" icon="create" on-click="editTemplateFemaleCold"></paper-icon-button>
             </div>
@@ -144,8 +149,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </paper-card>
 
     <paper-dialog opened="{{showEditTemplateDialog}}">
-      <h2>Edit Template <span>{{currentDocument._id}}</span></h2>
-      <bridgeit-document-property-text-editor document="{{currentDocument}}" document-property="content">
+      <h2>Edit Template <span>{{currentDocumentProperty}}</span></h2>
+      <bridgeit-document-property-text-editor document="{{templateMessagesDoc}}" document-property="{{currentDocumentProperty}}">
       </bridgeit-document-property-text-editor>
       <div class="buttons">
         <paper-button on-click="closeEditTemplateDialog">Close</paper-button>
@@ -162,46 +167,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready: function(){
         var _this = this;
-        bridgeit.io.documents.findDocuments({query: {type: 'temperature'}}).then(function(results){
-          results.forEach(function(doc){
-            if( doc._id === 'thresholdTemp'){
-              _this.thresholdTemp = doc.value;
-              _this.thresholdTempDoc = doc;
-            }
-            else if( doc._id === 'currentTemp'){
-              _this.currentTemp = doc.value;
-              _this.currentTempDoc = doc;
-            }
+        bridgeit.io.documents.getDocument({id: 'temperatureSettings'}).then(function(doc){
+          _this.temperatureSettingsDoc = doc;
+          _this.currentTemp = doc.current;
+          _this.thresholdTemp = doc.threshold;
+          return bridgeit.io.documents.getDocument({id: 'templateMessages'}).then(function(doc){
+            _this.templateMessagesDoc = doc;
+          }).then(function(){
+            _this.loaded = true;
+          }).catch(function(error){
+            _this.fire('bridgeit-error', {error: Error('Could not fetch template messages: ' + this.error)});
           });
-          _this.loaded = true;
+        }).catch(function(error){
+          _this.fire('bridgeit-error', {error: Error('Could not fetch temperature settings: ' + this.error)});
         });
+        
       },
 
       observers: ['tempChanged(currentTemp,thresholdTemp)'],
 
       properties: {
         loaded: {type: Boolean, notify: true},
+        temperatureSettingsDoc: {type: Object},
         currentTemp: {type: Number, notify: true},
-        currentTempDoc: {type: Object},
         thresholdTemp: {type: Number, notify: true},
-        thresholdTempDoc: {type: Object},
-        templateHotMale: {type: Object, notify: true},
-        templateColdMale: {type: Object, notify: true},
-        templateHotFemale: {type: Object, notify: true},
-        templateColdFemale: {type: Object, notify: true},
-        currentDocument: {type: Object, notify: true},
-        showEditTemplateDialog: {type: Boolean, computed: '_computeShowEditTemplateDialog(currentDocument)'}
+        templateMessagesDoc: {type: Object},
+        currentDocumentProperty: {type: Object, notify: true},
+        showEditTemplateDialog: {type: Boolean, computed: '_computeShowEditTemplateDialog(currentDocumentProperty)'}
       },
 
       tempChanged: function(currentTemp,thresholdTemp){
         if( this.loaded){
           var _this = this;
           this.fire('temp-changed', {currentTemp: currentTemp, thresholdTemp: thresholdTemp});
-          this.currentTempDoc.value = currentTemp;
-          this.thresholdTempDoc.value = thresholdTemp;
-          bridgeit.io.documents.updateDocument({id: this.currentTempDoc._id, document: this.currentTempDoc}).then(function(){
-            return bridgeit.io.documents.updateDocument({id: this.thresholdTempDoc._id, document: this.thresholdTempDoc});
-          }).catch(function(error){
+          this.temperatureSettingsDoc.current = currentTemp;
+          this.temperatureSettingsDoc.threshold = thresholdTemp;
+          bridgeit.io.documents.updateDocument({id: this.temperatureSettingsDoc._id, document: this.currentTempDoc}).catch(function(error){
             _this.fire('bridgeit-error', {error: Error('Temperature update failed: ' + this.error)});
           });
         }
@@ -209,30 +210,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       editTemplateMaleHot: function(){
         console.log('editTemplateMaleHot');
-        this.currentDocument = this.templateHotMale;
+        this.currentDocumentProperty = 'hotMale';
       },
 
       editTemplateMaleCold: function(){
         console.log('editTemplateMaleCold');
-        this.currentDocument = this.templateColdMale;
+        this.currentDocumentProperty = 'coldMale';
       },
 
       editTemplateFemaleHot: function(){
         console.log('editTemplateFemaleHot');
-        this.currentDocument = this.templateHotFemale;
+        this.currentDocumentProperty = 'hotFemale';
       },
 
       editTemplateFemaleCold: function(){
         console.log('editTemplateFemaleCold');
-        this.currentDocument = this.templateColdFemale;
+        this.currentDocumentProperty = 'coldFemale';
       },
 
       closeEditTemplateDialog: function(){
-        this.currentDocument = null;
+        this.currentDocumentProperty = null;
       },
 
-      _computeShowEditTemplateDialog: function(currentDocument){
-        return !!currentDocument;
+      _computeShowEditTemplateDialog: function(currentDocumentProperty){
+        return !!currentDocumentProperty;
       }
     });
   })();
