@@ -52,7 +52,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   }
 
   if( bridgeit.io.auth.isLoggedIn()){
-    setTimeout(setupNotificationListener, 2000);
+    setTimeout(setupNotificationListener, 3000); 
   }
 
   // See https://github.com/Polymer/polymer/issues/1381
