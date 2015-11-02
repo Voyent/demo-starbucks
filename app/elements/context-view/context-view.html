@@ -176,10 +176,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }).then(function(){
             _this.loaded = true;
           }).catch(function(error){
-            _this.fire('bridgeit-error', {error: Error('Could not fetch template messages: ' + this.error)});
+            _this.fire('bridgeit-error', {error: Error('Could not fetch template messages: ' + error)});
           });
         }).catch(function(error){
-          _this.fire('bridgeit-error', {error: Error('Could not fetch temperature settings: ' + this.error)});
+          _this.fire('bridgeit-error', {error: Error('Could not fetch temperature settings: ' + error)});
         });
         
       },
@@ -203,7 +203,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.temperatureSettingsDoc.current = currentTemp;
           this.temperatureSettingsDoc.threshold = thresholdTemp;
           bridgeit.io.documents.updateDocument({id: this.temperatureSettingsDoc._id, document: this.currentTempDoc}).catch(function(error){
-            _this.fire('bridgeit-error', {error: Error('Temperature update failed: ' + this.error)});
+            _this.fire('bridgeit-error', {error: Error('Temperature update failed: ' + error)});
           });
         }
       },
