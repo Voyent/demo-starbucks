@@ -1,15 +1,23 @@
-#!/bin/bash  
+#!/bin/bash
 set +e
-
 HOST=web1d
 
-#check host and api in config
+echo "...Updating from Git..."
+git pull
+echo "...Removing old Bower components and Dist..."
+rm -rf ./bower_components
 rm -rf ./dist
+echo "...Updating Bower with new install..."
+bower install
+echo "...Processing Gulp for production..."
 gulp || { exit 1; }
 cd ./dist
-tar -zcvf ../starbucks.tar.gz .
+echo "...Compressing Dist for transfer..."
+tar -zcf ../starbucks.tar.gz .
 cd ..
+echo "...Copying Dist to server..."
 scp -i ~/.ssh/ICEsoft_Linux_Test_Key_Pair.pem starbucks.tar.gz ubuntu@$HOST:~/. || { exit 1; }
-ssh -i ~/.ssh/ICEsoft_Linux_Test_Key_Pair.pem ubuntu@$HOST
-
-# sudo tar -zxvf ./starbucks.tar.gz -C /usr/share/nginx/html/static/demos/starbucks
+echo "...Unpacking Dist on server..."
+ssh -i ~/.ssh/ICEsoft_Linux_Test_Key_Pair.pem ubuntu@$HOST "sudo tar -zxf /home/ubuntu/starbucks.tar.gz -C /usr/share/nginx/html/static/demos/starbucks"
+echo "...Cleaning up local compressed file..."
+rm starbucks.tar.gz
