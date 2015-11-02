@@ -13,15 +13,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="events-view">
   <template>
-    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-  
+
     <style include="shared-styles">
       :host {
         display: block;
       }
     </style>
     <h2 class="page-title">Events</h2>
-    
+
   <bridgeit-query-editor id="queryEditor"
                          queryurltarget="queryURL"
                          options='{"limit":100,"sort":{"time":-1}}'
@@ -42,20 +41,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </bridgeit-query-list>
       </label>
   </div>
-  <br/>   
-    
+  <br/>
+
     <div>
         <bridgeit-event-monitor id="eventMonitor">
         </bridgeit-event-monitor>
     </div>
-    
+
     <div>
         <label>Query Results:
             <bridgeit-query-results id="queryResults" for="queryEditor">
             </bridgeit-query-results>
         </label>
     </div>
-    
+
   </template>
   <script>
   (function() {
@@ -71,18 +70,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           notify: true
         }
       },
-      
+
       ready: function() {
         var eventMonitor = this.$$('#eventMonitor');
         var queryEditor = this.$$('#queryEditor');
         queryEditor.setAttribute('account', bridgeit.io.auth.getLastKnownAccount());
         queryEditor.setAttribute('realm', bridgeit.io.auth.getLastKnownRealm());
-        queryEditor.setAttribute('accesstoken', bridgeit.io.auth.getLastAccessToken());        
-        
+        queryEditor.setAttribute('accesstoken', bridgeit.io.auth.getLastAccessToken());
+
         // Listen for queryExecuted event
         queryEditor.addEventListener('queryExecuted', function(e) {
             var res = e.detail.results;
-            
+
             // Before we process the data we want to change the dates (data.time field)
             // This is because the dates come from the queryEditor as UTC
             // But we want to display them in the table and graph as the local timezone
@@ -91,9 +90,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     res[i].time = new Date(res[i].time);
                 }
             }
-        
+
             eventMonitor.show(e.detail.results);
-        });       
+        });
 
         queryEditor.reloadEditor();
         queryEditor.fetchQueryList();
