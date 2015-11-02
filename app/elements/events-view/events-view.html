@@ -77,9 +77,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var queryEditor = this.$$('#queryEditor');
         queryEditor.setAttribute('account', bridgeit.io.auth.getLastKnownAccount());
         queryEditor.setAttribute('realm', bridgeit.io.auth.getLastKnownRealm());
-        queryEditor.setAttribute('accesstoken', bridgeit.io.auth.getLastAccessToken());
-        queryEditor.reloadEditor();
-        queryEditor.fetchQueryList();
+        queryEditor.setAttribute('accesstoken', bridgeit.io.auth.getLastAccessToken());        
         
         // Listen for queryExecuted event
         queryEditor.addEventListener('queryExecuted', function(e) {
@@ -95,7 +93,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
         
             eventMonitor.show(e.detail.results);
-        });
+        });       
+
+        queryEditor.reloadEditor();
+        queryEditor.fetchQueryList();
       }
     });
   })();
