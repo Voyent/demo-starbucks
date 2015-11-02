@@ -46,6 +46,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         demoView.$$('demo-data').push('notifications', enhancedMessage);
         demoView.message = enhancedMessage.message;
         demoView.querySelector('#toast').show();
+
+        /* TODO map notifications to user 
+        var demoData = demoView.$$('#demoData');
+        if( demoData ){
+          var userNotificationList = demoData.notifcationsByUser[payload.user];
+        }
+        else{
+          console.warn('could not locate demoData element to store user notification');
+        }*/
     });
     window.joinAppropriatePushGroup(); //delegates to user.js or admin.js
     bridgeit.xio.push.attach('http://dev.bridgeit.io/pushio/demos/realms/starbucks', bridgeit.io.auth.getLastKnownUsername());
@@ -59,6 +68,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   window.addEventListener('WebComponentsReady', function() {
     // imports are loaded and elements have been registered
   });
+
+  window.addEventListener('bridgeit-access-token-refreshed', function(e){
+    console.log('demo app received event bridgeit-access-token-refreshed', e);
+    bridgeit.xio.push.refreshConnection();
+  });
+
+  window.addEventListener('bridgeit-session-expired', function(e){
+    console.log('demo app received event bridgeit-session-expired', e);
+    bridgeit.xio.push.disconnect();
+  });
+
+  
 
   // Main area's paper-scroll-header-panel custom condensing transformation of
   // the appName in the middle-container and the bottom title in the bottom-container.
