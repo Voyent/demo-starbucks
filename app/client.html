@@ -115,8 +115,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
-    window.joinAppropriatePushGroup = function(){
-      bridgeit.xio.push.join(bridgeit.io.auth.getLastKnownUsername());
+    window.initializePushGroups = function(){
+      bridgeit.xio.push.join("/demos/realms/starbucks/" + bridgeit.io.auth.getLastKnownUsername());
     };
   </script>
   <!-- build:js scripts/app.js -->

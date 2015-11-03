@@ -36,27 +36,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   function setupNotificationListener(){
     bridgeit.xio.push.addListener(function (payload) {
-        var enhancedMessage = {
-          ts: new Date().toISOString(),
-          group: payload.group,
-          message: payload.message
-        };
-        console.log('Notification: ', enhancedMessage);
+        console.log('Notification: ', payload);
         var demoView = app.$.demoView;
-        demoView.$$('demo-data').push('notifications', enhancedMessage);
-        demoView.message = enhancedMessage.message;
+        demoView.$$('demo-data').push('notifications', payload);
+        demoView.message = payload.message;
         demoView.querySelector('#toast').show();
 
-        /* TODO map notifications to user 
         var demoData = demoView.$$('#demoData');
         if( demoData ){
-          var userNotificationList = demoData.notifcationsByUser[payload.user];
+          if( !demoData.notificationsByUser ){
+            demoData.notificationsByUser = {};
+          }
+          var userNotificationList = demoData.notificationsByUser[payload.username];
+          if( !userNotificationList ){
+            userNotificationList = demoData.notificationsByUser[payload.username] = [];
+          }
+          userNotificationList.push(payload);
+          demoData.lastNotificationTimestamp = payload.time;
         }
         else{
           console.warn('could not locate demoData element to store user notification');
-        }*/
+        }
     });
-    window.joinAppropriatePushGroup(); //delegates to user.js or admin.js
+    window.initializePushGroups(); //delegates to index.html for admins or client.html for regular users
     bridgeit.xio.push.attach('http://dev.bridgeit.io/pushio/demos/realms/starbucks', bridgeit.io.auth.getLastKnownUsername());
   }
 

@@ -124,8 +124,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
-    window.joinAppropriatePushGroup = function(){
-      bridgeit.xio.push.join('admin');
+    window.initializePushGroups = function(){
+      bridgeit.io.admin.getRealmUsers().then( function(users){
+        users.forEach(function(user){
+          try{
+            user.gender = JSON.parse(user.custom).gender;
+          }
+          catch(e){
+            console.error(e);
+          }
+          bridgeit.xio.push.join("/demos/realms/starbucks/" + user.username);
+        });
+        demoView.$$('demo-data').users = users;
+      }).catch( (error) => {
+        console.log('error loading users for users-view: ' + error);
+        this.fire('bridgeit-error', {error: Error('Could not fetch users list: ' + error.responseText)});
+      });
     };
   </script>
   <!-- build:js scripts/app.js -->
