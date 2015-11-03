@@ -35,6 +35,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   });
 
   function setupNotificationListener(){
+    bridgeit.xio.push.attach('http://dev.bridgeit.io/pushio/demos/realms/starbucks', bridgeit.io.auth.getLastKnownUsername());
     bridgeit.xio.push.addListener(function (payload) {
         console.log('Notification: ', payload);
         var demoView = app.$.demoView;
@@ -59,7 +60,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
     });
     window.initializePushGroups(); //delegates to index.html for admins or client.html for regular users
-    bridgeit.xio.push.attach('http://dev.bridgeit.io/pushio/demos/realms/starbucks', bridgeit.io.auth.getLastKnownUsername());
   }
 
   if( bridgeit.io.auth.isLoggedIn()){
