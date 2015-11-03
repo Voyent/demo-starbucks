@@ -113,6 +113,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin-left: 10px;
       }
 
+      paper-button[toggles] {
+        transition: all 0.3s;
+      }
+
+      paper-button[toggles][active] {
+        background-color: rgba(0, 0, 0, 0.25);
+      }
+
       /* Breakpoints */
       @media (max-width: 500px) {
         .hidden-phone {
@@ -339,11 +347,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <span class="flex"></span>
 
             <!-- Toolbar icons -->
-            <template is="dom-if" if="{{showCloudPushLink(cloudPushCompatible, cloudPushRegistered)}}">
-              <a on-tap="handleRegisterCloudPush">
+            <template is="dom-if" if="{{cloudPushCompatible}}">
+              <paper-button tabindex="0" toggles active="{{cloudPushSelected}}">
                 <iron-icon icon="cloud-download"></iron-icon>
-                <span class="hidden-phone">Register for Cloud Push</span>
-              </a>
+                <span class="hidden-phone">Cloud Push</span>
+              </paper-button>
             </template>
             <a on-tap="handleLogout">
               <iron-icon icon="lock-open"></iron-icon>
@@ -491,7 +499,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
 
         //check cloud push status
-        this.cloudPushRegistered = bridgeit.isRegistered();
+        this.cloudPushRegistered = this.cloudPushSelected = bridgeit.xio.push.cloudPushRegistered();
 
         //mobile
         this.cloudPushCompatible = bridgeit.isIOS() || bridgeit.isAndroid();
@@ -540,6 +548,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           notify: true,
           type: Boolean,
           reflectToAttribute: true
+        },
+
+        cloudPushSelected: {
+          notify: true,
+          type: Boolean,
+          observer: '_cloudPushSelectedChanged'
         },
 
         username: {
@@ -616,17 +630,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       handleRegisterCloudPush: function(){
-        if(( bridgeit.isIOS || bridgeit.isAndroid() ) &&  !bridgeit.isRegistered()){
-          var callbackName = 'demo-starbucks';
-          window[callbackName] = function(){
-            //TODO update app state on push callback    
-          };
-          
-          bridgeit.register('_reg', callbackName);
+        if( !bridgeit.isIOS() && !bridgeit.isAndroid() ){
+          window.alert('could not register for cloud push as supported mobile platform not detected');
+          return;
         }
+        bridgeit.xio.push.registerCloudPush('dev.bridgeit.io', 'demos', 'starbucks', bridgeit.io.auth.getLastKnownUsername());
+        this.cloudPushRegistered = true;
       },
 
-      showCloudPushLink: function(cloudPushCompatible, cloudPushRegistered){
+      computeShowCloudPushLink: function(cloudPushCompatible, cloudPushRegistered){
         var showCloudPushLink = cloudPushCompatible && !cloudPushRegistered;
         console.log('showCloudPushLink(' + cloudPushCompatible + ', ' + cloudPushRegistered + ') =' + showCloudPushLink);
         return showCloudPushLink;
@@ -634,6 +646,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       computeIsUser: function(isAdmin){
         return !isAdmin;
+      },
+
+      _cloudPushSelectedChanged: function(){
+        if( this.cloudPushSelected ){
+          this.handleRegisterCloudPush();
+        }
+        else{
+          bridgeit.xio.push.unregisterCloudPush('dev.bridgeit.io', 'demos', 'starbucks', bridgeit.io.auth.getLastKnownUsername());
+          this.cloudPushRegistered = false;
+        }
       }
     });
   })();
