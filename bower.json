@@ -8,7 +8,7 @@
     "platinum-elements": "PolymerElements/platinum-elements#^1.1.0",
     "neon-elements": "PolymerElements/neon-elements#^1.0.0",
     "page": "visionmedia/page.js#~1.6.3",
-    "bridgeit.io.js": "https://github.com/bridgeit/bridgeit.io.js.git#dev",
+    "bridgeit.io.js" : "#dev",
     "bridgeit.js": "https://github.com/bridgeit/bridgeit.js.git#1.0.7",
     "bluebird": "https://github.com/jakearchibald/es6-promise",
     "es6-promise": "3.0.2",
