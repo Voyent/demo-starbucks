@@ -39,6 +39,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     bridgeit.xio.push.addListener(function (payload) {
         console.log('Notification: ', payload);
 
+        //normalize payload TODO!!
+        if( payload.message && typeof payload.message === 'object' && payload.message.message){
+          payload.message = payload.message.message; 
+        }
+
         //ignore first batch of notifications for admin as they are irrelevant
         var usernameFromGroup = payload.group.split('/').pop();
         if( payload.message === 'joined' && payload.username !== usernameFromGroup ){
@@ -53,9 +58,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         else{
           messageToDisplay = payload.message;
         }
-        
+
         var demoView = app.$.demoView;
         demoView.$$('demo-data').push('notifications', payload);
+
         demoView.message = messageToDisplay;
         demoView.querySelector('#toast').show();
 
