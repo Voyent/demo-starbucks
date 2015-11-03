@@ -45,15 +45,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
 
         //ignore first batch of notifications for admin as they are irrelevant
-        var usernameFromGroup = payload.group.split('/').pop();
-        if( payload.message === 'joined' && payload.username !== usernameFromGroup ){
+        payload.usernameFromGroup = payload.group.split('/').pop();
+        if( payload.message === 'joined' && payload.username !== payload.usernameFromGroup ){
           console.log('suppressing notification display');
           return;
         }
 
         var messageToDisplay;
         if( payload.message === 'joined' ){
-          messageToDisplay = payload.username + ' joined group ' + payload.group;
+          messageToDisplay = payload.usernameFromGroup + ' joined';
         }
         else{
           messageToDisplay = payload.message;
@@ -70,9 +70,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           if( !demoData.notificationsByUser ){
             demoData.notificationsByUser = {};
           }
-          var userNotificationList = demoData.notificationsByUser[payload.username];
+          var userNotificationList = demoData.notificationsByUser[payload.usernameFromGroup];
           if( !userNotificationList ){
-            userNotificationList = demoData.notificationsByUser[payload.username] = [];
+            userNotificationList = demoData.notificationsByUser[payload.usernameFromGroup] = [];
           }
           userNotificationList.push(payload);
           demoData.lastNotificationTimestamp = payload.time;
@@ -85,7 +85,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   }
 
   if( bridgeit.io.auth.isLoggedIn()){
-    setTimeout(setupNotificationListener, 3000); 
+    setTimeout(function(){
+      setupNotificationListener();
+      //initialize lastNotificationTimestamp so user list displays
+      var demoData = app.$.demoView.$$('#demoData');
+      if( demoData ){
+         demoData.lastNotificationTimestamp = new Date().getTime();
+      }
+    }, 3000); 
   }
 
   // See https://github.com/Polymer/polymer/issues/1381
