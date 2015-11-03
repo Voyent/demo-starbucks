@@ -391,7 +391,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </section>
                
                 <section data-route="context">
-                  <context-view 
+                  <context-view visible="{{isEqual('context', route)}}"
                     current-temp="{{currentTemp}}" 
                     threshold-temp="{{thresholdTemp}}"
                     hot-male-template="{{hotMaleTemplate}}"

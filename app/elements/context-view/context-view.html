@@ -84,78 +84,82 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         min-width: 546px;
       }
     </style>
-    <h2 class="page-title">Context</h2>
-    <paper-card heading="Temperature">
-      <div class="card-content">
-        <div class="vertical center-justified layout">
-          <div class="vertical-section">
-            <div>
-              <div class="temp-control">
-                <label>Current</label>
-                <div>
-                  <paper-slider value="{{currentTemp}}" id="currentTempSlider"></paper-slider>
-                  &nbsp;<span>{{currentTemp}}</span>&deg;
-                </div>
-              </div>
-              <div class="temp-control">
-                <label>Threshold</label>
-                <div>
-                  <paper-slider value="{{thresholdTemp}}" id="thresholdTempSlider"></paper-slider>
-                  &nbsp;<span>{{thresholdTemp}}</span>&deg;
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </paper-card>
-    
-    <paper-card heading="Templates">
-      <div class="card-content">
-        <div class="templates">
-          <div class="row">
-            <div></div>
-            <div class="tbl-header">Hot</div>
-            <div class="tbl-header">Cold</div>
-          </div>
-          <div class="row">
-            <div class="tbl-header">Male</div>
-            <div class="cell">
-              <bridgeit-document document-id="templateMessages" attr-to-display="hotMale" document="{{templateMessagesDoc}}">
-              </bridgeit-document>
-              <paper-icon-button title="Edit" icon="create" on-click="editTemplateMaleHot"></paper-icon-button>
-            </div>
-            <div class="cell">
-              <bridgeit-document document-id="templateMessages" attr-to-display="coldMale" document="{{templateMessagesDoc}}">
-              </bridgeit-document>
-              <paper-icon-button title="Edit" icon="create" on-click="editTemplateMaleCold"></paper-icon-button>
-            </div>
-           </div>
-           <div class="row">
-            <div class="tbl-header">Female</div>
-            <div class="cell">
-              <bridgeit-document document-id="templateMessages" attr-to-display="hotFemale" document="{{templateMessagesDoc}}">
-              </bridgeit-document>
-              <paper-icon-button title="Edit" icon="create" on-click="editTemplateFemaleHot"></paper-icon-button>
-            </div>
-            <div class="cell">
-              <bridgeit-document document-id="templateMessages" attr-to-display="coldFemale" document="{{templateMessagesDoc}}">
-              </bridgeit-document>
-              <paper-icon-button title="Edit" icon="create" on-click="editTemplateFemaleCold"></paper-icon-button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </paper-card>
 
-    <paper-dialog opened="{{showEditTemplateDialog}}">
-      <h2>Edit Template <span>{{currentDocumentProperty}}</span></h2>
-      <bridgeit-document-property-text-editor document="{{templateMessagesDoc}}" document-property="{{currentDocumentProperty}}">
-      </bridgeit-document-property-text-editor>
-      <div class="buttons">
-        <paper-button on-click="closeEditTemplateDialog">Close</paper-button>
-      </div>
-    </paper-dialog>
+    <template is="dom-if" if="{{visible}}">
+      <h2 class="page-title">Context</h2>
+      <paper-card heading="Temperature">
+        <div class="card-content">
+          <div class="vertical center-justified layout">
+            <div class="vertical-section">
+              <div>
+                <div class="temp-control">
+                  <label>Current</label>
+                  <div>
+                    <paper-slider value="{{currentTemp}}" id="currentTempSlider"></paper-slider>
+                    &nbsp;<span>{{currentTemp}}</span>&deg;
+                  </div>
+                </div>
+                <div class="temp-control">
+                  <label>Threshold</label>
+                  <div>
+                    <paper-slider value="{{thresholdTemp}}" id="thresholdTempSlider"></paper-slider>
+                    &nbsp;<span>{{thresholdTemp}}</span>&deg;
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </paper-card>
+      
+      <paper-card heading="Templates">
+        <div class="card-content">
+          <div class="templates">
+            <div class="row">
+              <div></div>
+              <div class="tbl-header">Hot</div>
+              <div class="tbl-header">Cold</div>
+            </div>
+            <div class="row">
+              <div class="tbl-header">Male</div>
+              <div class="cell">
+                <bridgeit-document document-id="templateMessages" attr-to-display="hotMale" document="{{templateMessagesDoc}}">
+                </bridgeit-document>
+                <paper-icon-button title="Edit" icon="create" on-click="editTemplateMaleHot"></paper-icon-button>
+              </div>
+              <div class="cell">
+                <bridgeit-document document-id="templateMessages" attr-to-display="coldMale" document="{{templateMessagesDoc}}">
+                </bridgeit-document>
+                <paper-icon-button title="Edit" icon="create" on-click="editTemplateMaleCold"></paper-icon-button>
+              </div>
+             </div>
+             <div class="row">
+              <div class="tbl-header">Female</div>
+              <div class="cell">
+                <bridgeit-document document-id="templateMessages" attr-to-display="hotFemale" document="{{templateMessagesDoc}}">
+                </bridgeit-document>
+                <paper-icon-button title="Edit" icon="create" on-click="editTemplateFemaleHot"></paper-icon-button>
+              </div>
+              <div class="cell">
+                <bridgeit-document document-id="templateMessages" attr-to-display="coldFemale" document="{{templateMessagesDoc}}">
+                </bridgeit-document>
+                <paper-icon-button title="Edit" icon="create" on-click="editTemplateFemaleCold"></paper-icon-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </paper-card>
+
+      <paper-dialog opened="{{showEditTemplateDialog}}">
+        <h2>Edit Template <span>{{currentDocumentProperty}}</span></h2>
+        <bridgeit-document-property-text-editor document="{{templateMessagesDoc}}" document-property="{{currentDocumentProperty}}">
+        </bridgeit-document-property-text-editor>
+        <div class="buttons">
+          <paper-button on-click="closeEditTemplateDialog">Close</paper-button>
+        </div>
+      </paper-dialog>
+
+    </template>
 
   </template>
   <script>
@@ -187,6 +191,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       observers: ['tempChanged(currentTemp,thresholdTemp)'],
 
       properties: {
+        visible: {type: Boolean, notify: true},
         loaded: {type: Boolean, notify: true},
         temperatureSettingsDoc: {type: Object},
         currentTemp: {type: Number, notify: true},
@@ -197,7 +202,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       tempChanged: function(currentTemp,thresholdTemp){
-        if( this.loaded){
+        if( this.loaded && this.visible ){
           var _this = this;
           this.fire('temp-changed', {currentTemp: currentTemp, thresholdTemp: thresholdTemp});
           this.temperatureSettingsDoc.current = currentTemp;
