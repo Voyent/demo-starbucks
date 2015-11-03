@@ -375,7 +375,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <template is="dom-if" if="{{isAdmin}}">
 
                 <section data-route="users">
-                  <users-view visible="{{isEqual('users', route)}}"></users-view>
+                  <users-view visible="{{isEqual('users', route)}}" users="{{users}}"></users-view>
                 </section>
 
                 <section data-route="locations">
@@ -402,7 +402,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </section>
 
                 <section data-route="others">
-                  <others-view></others-view>
+                  <others-view users="[[users]]" last-notification-timestamp="[[lastNotificationTimestamp]]"
+                    notifications-by-user="[[notificationsByUser]]"></others-view>
                 </section>
 
                 <section data-route="events">
@@ -440,14 +441,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <span class="toast-hide-button" role="button" tabindex="0" onclick="app.$.errorToast.hide()">{{error}}</span>
       </paper-toast>
 
-      <demo-data 
+      <demo-data id="demoData"
         current-temp="{{currentTemp}}" 
         threshold-temp="{{thresholdTemp}}"
         hot-male-template="{{hotMaleTemplate}}"
         cold-male-template="{{coldMaleTemplate}}"
         hot-female-template="{{hotFemaleTemplate}}"
         cold-female-template="{{coldFemaleTemplate}}"
-        notifications="{{notifications}}">
+        notifications="{{notifications}}"
+        users="{{users}}"
+        last-notification-timestamp="{{lastNotificationTimestamp}}"
+        notifications-by-user="{{notificationsByUser}}">
       </demo-data>
     </template>
   </template>

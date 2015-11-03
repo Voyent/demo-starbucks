@@ -17,8 +17,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+      paper-card{
+        width: 100%;
+      }
     </style>
-    <h2 class="page-title">Other Users</h2>
+    <h2 class="page-title">Other User Notifications</h2>
+
+    <template is="dom-repeat" items="{{_decoratedUserNotifications}}">
+      <paper-card heading="{{item.username}}">
+        <div class="card-content">
+          <paper-menu>
+            <template is="dom-repeat" items="{{item.notifications}}" as="msg">
+              <paper-item>
+                <span class="cell notification-ts">{{msg.time}}</span>
+                <span class="cell notification-group">{{msg.group}}</span>
+                <span class="cell notification-message">{{msg.message}}</span>
+              </paper-item>
+            </template>
+          </paper-menu>
+        </div>
+      </paper-card>
+    </template>
   </template>
   <script>
   (function() {
@@ -28,11 +47,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'others-view',
 
       properties: {
-        foo: {
-          type: String,
-          value: 'others-view',
+        users: {
+          type: Array,
           notify: true
+        },
+        notificationsByUser: {
+          type: Object,
+          notify: true
+        },
+        _decoratedUserNotifications: {
+          type: Array,
+          computed: '_computeDecoratedUserNotifications(users, notificationsByUser, lastNotificationTimestamp)'
+        },
+        lastNotificationTimestamp: {
+          type: Number
         }
+      },
+
+      _computeDecoratedUserNotifications: function(users, notificationsByUser, lastNotificationTimestamp){
+        var list = [];
+        list.lastUpdated = lastNotificationTimestamp;
+        var usernames = users.map(function(user){return user.username;});
+        usernames.sort();
+        usernames.forEach(function(username){
+          list.push({username: username, notifications: notificationsByUser[username]});
+        });
+        return list;
       }
     });
   })();

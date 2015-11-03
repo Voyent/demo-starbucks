@@ -19,6 +19,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'demo-data',
 
       properties: {
+        users: {type: Array, notify: true},
         currentTemp: {type: Number, notify: true},
         thresholdTemp: {type: Number, notify: true},
         notifications: {type: Array, value: [], notify: true},
@@ -26,7 +27,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         coldMaleTemplate: {type: String, notify: true},
         hotFemaleTemplate: {type: String, notify: true},
         coldFemaleTemplate: {type: String, notify: true},
-        
+        notificationsByUser: {type: Object, notify: true, value: function(){ return {}; }},
+        lastNotificationTimestamp: {type: Date, notify: true},
       }
     });
   })();
