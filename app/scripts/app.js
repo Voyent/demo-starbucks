@@ -38,9 +38,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     bridgeit.xio.push.attach('http://dev.bridgeit.io/pushio/demos/realms/starbucks', bridgeit.io.auth.getLastKnownUsername());
     bridgeit.xio.push.addListener(function (payload) {
         console.log('Notification: ', payload);
+
+        //ignore first batch of notifications for admin as they are irrelevant
+        var usernameFromGroup = payload.group.split('/').pop();
+        if( payload.message === 'joined' && payload.username !== usernameFromGroup ){
+          console.log('suppressing notification display');
+          return;
+        }
+
+        var messageToDisplay;
+        if( payload.message === 'joined' ){
+          messageToDisplay = payload.username + ' joined group ' + payload.group;
+        }
+        else{
+          messageToDisplay = payload.message;
+        }
+        
         var demoView = app.$.demoView;
         demoView.$$('demo-data').push('notifications', payload);
-        demoView.message = payload.message;
+        demoView.message = messageToDisplay;
         demoView.querySelector('#toast').show();
 
         var demoData = demoView.$$('#demoData');

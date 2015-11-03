@@ -39,11 +39,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <paper-material>
         <paper-menu class="notifications">
           <template is="dom-repeat" items="[[notifications]]">
-            <paper-item>
-              <span class="cell notification-ts">{{item.time}}</span>
-              <span class="cell notification-group">{{item.group}}</span>
-              <span class="cell notification-message">{{item.message}}</span>
-            </paper-item>
+            <paper-icon-item>
+              <iron-icon icon="communication:message" item-icon></iron-icon>
+              <paper-item-body two-line>
+                <div><span>{{item.username}}</span> <span>{{item.message}}</span></div>
+                <div secondary>
+                  <label>Group</label>&nbsp;<span>{{item.group}}</span><br/>
+                  <span>{{item.time}}</span>
+                </div>
+              </paper-item-body>
+            </paper-icon-item>
           </template>
         </paper-menu>
       </paper-material>

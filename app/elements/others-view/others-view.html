@@ -20,18 +20,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       paper-card{
         width: 100%;
       }
+      paper-card .card-content.message-list {
+        padding: 0;
+      }
+      .user-card-header{
+        background-color: aliceblue;
+      }
     </style>
     <h2 class="page-title">Other User Notifications</h2>
 
     <template is="dom-repeat" items="{{_decoratedUserNotifications}}">
-      <paper-card heading="{{item.username}}">
-        <div class="card-content">
+      <paper-card>
+        <div class="card-content user-card-header">
+          <iron-icon icon="social:person" item-icon></iron-icon>
+          <span>{{item.username}}</span>
+        </div>
+        <div class="card-content message-list">
           <paper-menu>
             <template is="dom-repeat" items="{{item.notifications}}" as="msg">
               <paper-item>
-                <span class="cell notification-ts">{{msg.time}}</span>
-                <span class="cell notification-group">{{msg.group}}</span>
-                <span class="cell notification-message">{{msg.message}}</span>
+                <paper-item-body two-line>
+                  <div>{{msg.message}}</div>
+                  <div secondary>
+                    <label>Group</label>&nbsp;<span>{{msg.group}}</span><br/>
+                    <span>{{msg.time}}</span>
+                  </div>
+                </paper-item-body>
               </paper-item>
             </template>
           </paper-menu>
