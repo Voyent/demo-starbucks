@@ -207,7 +207,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.fire('temp-changed', {currentTemp: currentTemp, thresholdTemp: thresholdTemp});
           this.temperatureSettingsDoc.current = currentTemp;
           this.temperatureSettingsDoc.threshold = thresholdTemp;
-          bridgeit.io.documents.updateDocument({id: this.temperatureSettingsDoc._id, document: this.currentTempDoc}).catch(function(error){
+          bridgeit.io.documents.updateDocument({
+            id: this.temperatureSettingsDoc._id, 
+            document: this.temperatureSettingsDoc
+          }).catch(function(error){
             _this.fire('bridgeit-error', {error: Error('Temperature update failed: ' + error)});
           });
         }
