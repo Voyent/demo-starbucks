@@ -155,7 +155,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _computeNotificationCount: function(notifications){
         var res = this.notifications ? this.notifications.length : 0;
-        console.log('_computeNotificationCount() = ' + res);
+        console.log('_computeNotificationCount(' + notifications + ') = ' + res);
+        return res;
       },
 
       _computeHasNotifications: function(notifications){
