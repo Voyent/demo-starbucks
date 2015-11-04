@@ -52,6 +52,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         padding: 20px;
         background-color: #FFF;
       }
+      paper-item-body ::content > * {
+        white-space: normal;
+      }
     </style>
     <h2 class="page-title"><span>{{notificationCount}}</span>&nbsp;Notifications</h2>
     <paper-toggle-button checked="{{groupByUser}}">Group by User</paper-toggle-button>
@@ -69,7 +72,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <paper-item-body two-line>
                   <div><span>{{item.usernameFromGroup}}</span> <span>{{item.message}}</span></div>
                   <div secondary>
-                    <label>Group</label>&nbsp;<span>{{item.group}}</span><br/>
                     <span>{{item.time}}</span>
                   </div>
                 </paper-item-body>
@@ -94,7 +96,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   <paper-item-body two-line>
                     <div>{{msg.message}}</div>
                     <div secondary>
-                      <label>Group</label>&nbsp;<span>{{msg.group}}</span><br/>
                       <span>{{msg.time}}</span>
                     </div>
                   </paper-item-body>
