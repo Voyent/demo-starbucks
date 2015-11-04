@@ -50,16 +50,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       paper-material{
         padding: 20px;
+        background-color: #FFF;
       }
     </style>
     <h2 class="page-title">Notifications</h2>
     <paper-toggle-button checked="{{groupByUser}}">Group by User</paper-toggle-button>
     
     <template is="dom-if" if="{{!groupByUser}}">
-      <template is="dom-if" if="{{!notificationCount}}">
+      <template is="dom-if" if="{{!hasNotifications}}">
         <paper-material>No notifications yet...</paper-material>
       </template>
-      <template is="dom-if" if="{{notificationCount}}">
+      <template is="dom-if" if="{{hasNotifications}}">
         <paper-material>
           <paper-menu class="notifications">
             <template is="dom-repeat" items="[[notifications]]" sort="sortNotifications">
@@ -130,7 +131,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         lastNotificationTimestamp: {
           type: Number
         },
-        notificationCount: { type: Number, notify: true, computed: '_computeNotificationCount(notifications.splices)'}
+        notificationCount: { type: Number, notify: true, reflectToAttribute: true, computed: '_computeNotificationCount(notifications.splices)'},
+        hasNotifications: { type: Boolean, notify: true, computed: '_computeHasNotifications(notifications.splices)'}
       },
 
       sortNotifications: function(a,b) {
@@ -152,7 +154,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _computeNotificationCount: function(notifications){
-        return notifications ? notifications.length : 0;
+        var res = this.notifications ? this.notifications.length : 0;
+        console.log('_computeNotificationCount() = ' + res);
+      },
+
+      _computeHasNotifications: function(notifications){
+        return this.notifications && this.notifications.length;
       }
 
 
