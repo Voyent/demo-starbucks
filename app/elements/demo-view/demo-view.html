@@ -320,23 +320,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <span>Context</span>
               </a>
 
-              <a data-route="others" href="#!/others" on-tap="onOthersRouteClick">
-                <span class="demo-step-badge">6</span>
-                <span>Others</span>
-              </a>
-
               <a data-route="events" href="#!/events" on-tap="onEventsRouteClick">
-                <span class="demo-step-badge">7</span>
+                <span class="demo-step-badge">6</span>
                 <span>Events</span>
               </a>
 
               <a data-route="notifications" href="#!/notifications" on-tap="onNotificationsRouteClick">
-                <span class="demo-step-badge">8</span>
+                <span class="demo-step-badge">7</span>
                 <span>Notifications</span>
               </a>
 
               <a data-route="logs" href="#!/logs" on-tap="onLogsRouteClick">
-                <span class="demo-step-badge">9</span>
+                <span class="demo-step-badge">8</span>
                 <span>Logs</span>
               </a>
 
@@ -425,17 +420,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   </context-view>
                 </section>
 
-                <section data-route="others">
-                  <others-view users="[[users]]" last-notification-timestamp="[[lastNotificationTimestamp]]"
-                    notifications-by-user="[[notificationsByUser]]"></others-view>
-                </section>
-
                 <section data-route="events">
                   <events-view></events-view>
                 </section>
 
                 <section data-route="notifications">
-                  <notifications-view notifications="[[notifications]]"></notifications-view>
+                  <notifications-view notifications="[[notifications]]" users="[[users]]" 
+                    last-notification-timestamp="[[lastNotificationTimestamp]]"
+                    notifications-by-user="[[notificationsByUser]]">
+                  </notifications-view>
                 </section>
 
                 <section data-route="logs">
@@ -631,11 +624,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       onContextRouteClick: function(){
         this.fire('onDataRouteClick');
         this.route = 'context';
-      },
-
-      onOthersRouteClick: function(){
-        this.fire('onDataRouteClick');
-        this.route = 'others';
       },
 
       onLogsRouteClick: function(){
