@@ -20,7 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <template is="dom-if" if="{{visible}}">
       <h2 class="page-title">Locations</h2>
-      <bridgeit-location-editor height="500"></bridgeit-location-editor>
+      <bridgeit-location-editor id="locationEditor" height="500"></bridgeit-location-editor>
     </template>
   </template>
   <script>
@@ -33,8 +33,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       properties: {
         visible: {
           type: Boolean,
-          notify: true
+          notify: true,
+          observer:'resizeMap'
         }
+      },
+      resizeMap: function() {
+        setTimeout(function() {
+          if (this.$$('#locationEditor')) {
+            this.$$('#locationEditor').resizeMap();
+          }
+        }.bind(this),0);
       }
     });
   })();
