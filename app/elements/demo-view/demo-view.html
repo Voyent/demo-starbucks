@@ -97,18 +97,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         line-height: 27px;
         vertical-align: middle;
       }
-      .quote{
-        font-size: 30px;
-        display: inline-block;
-        position: absolute;
-        top: 6px;
-      }
-      .quote:first-child{
-        margin-left: -12px;
-      }
-      .quote:last-child{
-        margin-right: -10px;
-      }
       #errorToast{
         background-color: #C70000;
       }
@@ -196,6 +184,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           font-size: 20px;
         }
 
+      }
+
+      /* Phone & Tablet */
+      @media (max-width: 900px) {
+        :host paper-toolbar ::content .app-name{
+          font-size: 30px;
+          line-height: 30px;
+        }
+        :host paper-toolbar ::content .app-name small{
+          font-size: 20px;
+          line-height: 20px;
+        }
+        :host paper-toolbar ::content .bottom-title{
+          line-height: 14px;
+          font-size: 12px;
+        }
       }
 
        /* Desktop */
