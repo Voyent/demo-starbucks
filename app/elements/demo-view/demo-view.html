@@ -121,6 +121,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         cursor:pointer;
       }
 
+      paper-badge{
+        margin-left: -18px;
+        margin-top: 22px;
+      }
+
+      a[data-route="*"]{
+        position: relative;
+      }
+
+      .green-badge {
+        --paper-badge-background: var(--paper-green-300);
+      }
+
       /* Breakpoints */
       @media (max-width: 500px) {
         .hidden-phone {
@@ -135,6 +148,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       /* Small */
       @media (max-width: 600px) {
+
+        .content{
+          padding: 20px;
+        }
 
         paper-material {
           --menu-container-display: none;
@@ -323,6 +340,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <a data-route="notifications" href="#!/notifications" on-tap="onNotificationsRouteClick">
                 <span class="demo-step-badge">5</span>
                 <span>Notifications</span>
+                <paper-badge label="{{notificationCount}}" class="green-badge"></paper-badge>
               </a>
 
               <a data-route="events" href="#!/events" on-tap="onEventsRouteClick">
@@ -427,7 +445,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <section data-route="notifications">
                   <notifications-view notifications="[[notifications]]" users="[[users]]" 
                     last-notification-timestamp="[[lastNotificationTimestamp]]"
-                    notifications-by-user="[[notificationsByUser]]">
+                    notifications-by-user="[[notificationsByUser]]" notification-count="{{notificationCount}}">
                   </notifications-view>
                 </section>
 
@@ -587,47 +605,47 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       onHomeRouteClick: function(){
-        this.fire('onDataRouteClick');
+        this.onDataRouteClick();
         this.route = 'home';
       },
 
       onEventsRouteClick: function(){
-        this.fire('onDataRouteClick');
+        this.onDataRouteClick();
         this.route = 'events';
       },
 
       onNotificationsRouteClick: function(){
-        this.fire('onDataRouteClick');
+        this.onDataRouteClick();
         this.route = 'notifications';
       },
 
       onUsersRouteClick: function(){
-        this.fire('onDataRouteClick');
+        this.onDataRouteClick();
         this.route = 'users';
       },
 
       onLocationsRouteClick: function(){
-        this.fire('onDataRouteClick');
+        this.onDataRouteClick();
         this.route = 'locations';
       },
 
       onActionsRouteClick: function(){
-        this.fire('onDataRouteClick');
+        this.onDataRouteClick();
         this.route = 'actions';
       },
 
       onRoutesRouteClick: function(){
-        this.fire('onDataRouteClick');
+        this.onDataRouteClick();
         this.route = 'routes';
       },
 
       onContextRouteClick: function(){
-        this.fire('onDataRouteClick');
+        this.onDataRouteClick();
         this.route = 'context';
       },
 
       onLogsRouteClick: function(){
-        this.fire('onDataRouteClick');
+        this.onDataRouteClick();
         this.route = 'logs';
       },
 
@@ -675,7 +693,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             
           }
         }
-        
       }
     });
   })();
