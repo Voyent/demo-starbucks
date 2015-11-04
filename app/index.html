@@ -146,9 +146,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           demoView.$$('demo-data').users = users;
         }, 5000);
         
-      }).catch( (error) => {
+      }).catch( function(error){
         console.log('error loading users for users-view: ' + error);
-        this.fire('bridgeit-error', {error: Error('Could not fetch users list: ' + error.responseText)});
+        document.querySelector('#app').fire('bridgeit-error', {error: Error('Could not fetch users list: ' + error.responseText)});
       });
     };
   </script>

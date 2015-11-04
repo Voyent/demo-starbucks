@@ -488,10 +488,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready: function(){
 
+        var _this = this;
+
         this.route = 'home';
 
         //error handling
-        this.addEventListener('bridgeit-error',  (e) => {
+        this.addEventListener('bridgeit-error',  function(e){
           console.log('handling bridgeit-error: ' + e.detail.error);
           var errorMessage;
           if( e.detail.error ){
@@ -503,15 +505,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
           }
 
-          this.error = 'Error: ' + errorMessage;
-          this.querySelector('#errorToast').show();
+          _this.error = 'Error: ' + errorMessage;
+          _this.querySelector('#errorToast').show();
         });
 
         //temperature event handling
-        this.addEventListener('temp-changed',  (e) => {
+        this.addEventListener('temp-changed',  function(e){
           console.log('handling temp-changed: ' + JSON.stringify(e.detail));
-          this.message = 'Temperture changed. Current: ' + e.detail.currentTemp + 'deg, Threshold: ' + e.detail.thresholdTemp + 'deg.';
-          this.querySelector('#toast').show();
+          _this.message = 'Temperture changed. Current: ' + e.detail.currentTemp + 'deg, Threshold: ' + e.detail.thresholdTemp + 'deg.';
+          _this.querySelector('#toast').show();
         });
 
         //check cloud push status
