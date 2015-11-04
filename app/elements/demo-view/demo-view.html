@@ -112,6 +112,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background-color: rgba(0, 0, 0, 0.25);
       }
 
+      .logout {
+        cursor:pointer;
+      }
+
       /* Breakpoints */
       @media (max-width: 500px) {
         .hidden-phone {
@@ -264,7 +268,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       /* desktop-xlarge */
       @media all and (min-width: 1601px) and (max-width: 1920px) { }
 
-      
+
     </style>
     <template is="dom-if" if="{{visible}}">
        <paper-drawer-panel id="paperDrawerPanel">
@@ -309,22 +313,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <a data-route="context" href="#!/context" on-tap="onContextRouteClick">
                 <span class="demo-step-badge">5</span>
                 <span>Context</span>
-              </a>      
+              </a>
 
               <a data-route="others" href="#!/others" on-tap="onOthersRouteClick">
                 <span class="demo-step-badge">6</span>
                 <span>Others</span>
-              </a>   
+              </a>
 
               <a data-route="events" href="#!/events" on-tap="onEventsRouteClick">
                 <span class="demo-step-badge">7</span>
                 <span>Events</span>
-              </a>   
+              </a>
 
               <a data-route="notifications" href="#!/notifications" on-tap="onNotificationsRouteClick">
                 <span class="demo-step-badge">8</span>
                 <span>Notifications</span>
-              </a>     
+              </a>
 
               <a data-route="logs" href="#!/logs" on-tap="onLogsRouteClick">
                 <span class="demo-step-badge">9</span>
@@ -338,9 +342,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <a data-route="notifications" href="#!/notifications" on-tap="onNotificationsRouteClick">
                 <span class="demo-step-badge">1</span>
                 <span>Notifications</span>
-              </a>  
+              </a>
 
-            </template>          
+            </template>
 
           </paper-menu>
         </paper-scroll-header-panel>
@@ -360,7 +364,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <span class="hidden-phone">Cloud Push</span>
               </paper-button>
             </template>
-            <a on-tap="handleLogout">
+            <a class="logout" on-tap="handleLogout">
               <iron-icon icon="lock-open"></iron-icon>
               <span class="hidden-phone">Logout</span>
             </a>
@@ -404,10 +408,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <section data-route="routes">
                   <routes-view visible="{{isEqual('routes', route)}}"></routes-view>
                 </section>
-               
+
                 <section data-route="context">
                   <context-view visible="{{isEqual('context', route)}}"
-                    current-temp="{{currentTemp}}" 
+                    current-temp="{{currentTemp}}"
                     threshold-temp="{{thresholdTemp}}"
                     hot-male-template="{{hotMaleTemplate}}"
                     cold-male-template="{{coldMaleTemplate}}"
@@ -457,7 +461,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </paper-toast>
 
       <demo-data id="demoData"
-        current-temp="{{currentTemp}}" 
+        current-temp="{{currentTemp}}"
         threshold-temp="{{thresholdTemp}}"
         hot-male-template="{{hotMaleTemplate}}"
         cold-male-template="{{coldMaleTemplate}}"
@@ -480,7 +484,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ready: function(){
 
         this.route = 'home';
-        
+
         //error handling
         this.addEventListener('bridgeit-error',  (e) => {
           console.log('handling bridgeit-error: ' + e.detail.error);
@@ -493,7 +497,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               errorMessage = e.detail.error.responseText;
             }
           }
-          
+
           this.error = 'Error: ' + errorMessage;
           this.querySelector('#errorToast').show();
         });
