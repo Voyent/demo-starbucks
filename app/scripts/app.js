@@ -92,7 +92,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       if( demoData ){
          demoData.lastNotificationTimestamp = new Date().getTime();
       }
-    }, 3000); 
+    }, 5000); 
   }
 
   // See https://github.com/Polymer/polymer/issues/1381
@@ -139,7 +139,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   // Close drawer after menu item is selected if drawerPanel is narrow
   app.onDataRouteClick = function() {
-    var drawerPanel = document.querySelector('#paperDrawerPanel');
+    var drawerPanel = document.getElementById('paperDrawerPanel');
     if (drawerPanel.narrow) {
       drawerPanel.closeDrawer();
     }
