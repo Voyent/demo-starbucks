@@ -18,7 +18,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
       bridgeit-action-editor {
-        --action-editor: {  /* [Custom component (host) styling] */
+        --action-editor: {
           -webkit-touch-callout: none;
           -webkit-user-select: none;
           -khtml-user-select: none;
@@ -26,40 +26,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           -ms-user-select: none;
           user-select: none;
         };
-        --action-editor-action-container: { /* [Custom action container] */
+        --action-editor-action-container: {
           background-color: transparent;
         };
-        --action-editor-form: { /* [Custom form styling] */
+        --action-editor-form: {
           padding:0;
           margin:0;
         };
-        --action-editor-task-panel: { /* [Custom task panel styling] */
+        --action-editor-task-panel: {
           border-color:#999;
           background-color: transparent;
         };
-        --action-editor-task-panel-header: { /* [Custom task panel header styling] */
+        --action-editor-task-panel-header: {
           background-color: #C5C5C5;
         };
-        --action-editor-task-panel-item: { /* [Custom task panel task item (includes task group) styling] */
+        --action-editor-task-panel-item: {
           background-color: #DEDEDE;
         };
-        --action-editor-task-panel-item-hover: { /* [Custom task panel task item hover styling] */
+        --action-editor-task-panel-item-hover: {
           border-color:#3E458C;
         };
-        --action-editor-task-panel-group-item: { /* [Custom task panel task group styling] */
+        --action-editor-task-panel-group-item: {
           background-color: #D6D6D6;
         };
-        --action-editor-task-group: { /* [Custom task group styling] */
+        --action-editor-task-group: {
           background-color: #D6D6D6;
         };
-        --action-editor-task: { /* [Custom task styling] */
+        --action-editor-task: {
           background-color: #DEDEDE;
         };
-        --action-editor-button-container: { /* [Custom button wrapper styling] */
+        --action-editor-button-container: {
           background-color: transparent;
           padding:10px 0 10px 0;
         };
-        --action-editor-input: { /* [Custom input styling] */
+        --action-editor-input: {
           display: block;
           width: 100%;
           padding:2px 3px;
@@ -75,7 +75,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
           transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
         };
-        --action-editor-event-triggers-label: { /* [Custom event triggers label styling] */
+        --action-editor-button: {
+          font: inherit;
+          background-color:#F9F9F9;
+          border-color: transparent;
+          color:black;
+          outline: none;
+          box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+          text-transform: uppercase;
+          cursor:pointer;
+        };
+        --action-editor-event-triggers-label: {
           display: block;
           width: 100%;
           padding:2px 3px;
@@ -92,9 +102,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         };
       }
       bridgeit-action-list {
-        --action-list-wrapper: { /* [Custom table wrapper styling] */
+        --action-list-wrapper: {
           padding:10px 0 10px 0;
           background-color: transparent;
+        };
+        --action-list-button: {
+          font: inherit;
+          background-color:#F9F9F9;
+          border-color: transparent;
+          color:black;
+          outline: none;
+          box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+          text-transform: uppercase;
+          cursor:pointer;
         };
       }
     </style>
