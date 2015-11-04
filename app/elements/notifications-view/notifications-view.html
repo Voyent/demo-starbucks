@@ -53,7 +53,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background-color: #FFF;
       }
     </style>
-    <h2 class="page-title">Notifications</h2>
+    <h2 class="page-title"><span>{{notificationCount}}</span>&nbsp;Notifications</h2>
     <paper-toggle-button checked="{{groupByUser}}">Group by User</paper-toggle-button>
     
     <template is="dom-if" if="{{!groupByUser}}">
@@ -160,6 +160,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _computeHasNotifications: function(notifications){
+        console.log('_computeHasNotifications(' + notifications + ')');
         return this.notifications && this.notifications.length;
       }
 
