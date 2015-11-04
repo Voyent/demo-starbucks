@@ -55,6 +55,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       paper-item-body ::content > * {
         white-space: normal;
       }
+      paper-icon-item{
+        border-bottom: 1px solid #EEE;
+      }
     </style>
     <h2 class="page-title"><span>{{notificationCount}}</span>&nbsp;Notifications</h2>
     <paper-toggle-button checked="{{groupByUser}}">Group by User</paper-toggle-button>
@@ -132,7 +135,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         lastNotificationTimestamp: {
           type: Number
         },
-        notificationCount: { type: Number, notify: true, reflectToAttribute: true, computed: '_computeNotificationCount(notifications.splices)'},
+        notificationCount: { type: Number, notify: true},
         hasNotifications: { type: Boolean, notify: true, computed: '_computeHasNotifications(notifications.splices)'}
       },
 
@@ -152,12 +155,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           list.push({username: username, notifications: userNotifications});
         });
         return list;
-      },
-
-      _computeNotificationCount: function(notifications){
-        var res = this.notifications ? this.notifications.length : 0;
-        console.log('_computeNotificationCount(' + notifications + ') = ' + res);
-        return res;
       },
 
       _computeHasNotifications: function(notifications){

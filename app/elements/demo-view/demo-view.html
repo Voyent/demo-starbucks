@@ -121,13 +121,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         cursor:pointer;
       }
 
-      paper-badge{
-        margin-left: -18px;
-        margin-top: 22px;
-      }
-
       a[data-route="*"]{
         position: relative;
+      }
+
+      paper-badge{
+        margin-top: 9px;
+        margin-left: -23px;
       }
 
       .green-badge {
@@ -158,6 +158,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           width: calc(97.33% - 32px);
           padding-left: 16px;
           padding-right: 16px;
+        }
+
+        paper-button{
+          min-width: 2em;
+        }
+
+        paper-badge{
+          margin-top: 9px;
+          margin-left: -10px;
         }
 
         #drawer .paper-toolbar {
@@ -340,7 +349,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <a data-route="notifications" href="#!/notifications" on-tap="onNotificationsRouteClick">
                 <span class="demo-step-badge">5</span>
                 <span>Notifications</span>
-                <paper-badge label="{{notificationCount}}" class="green-badge"></paper-badge>
               </a>
 
               <a data-route="events" href="#!/events" on-tap="onEventsRouteClick">
@@ -382,10 +390,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <span class="hidden-phone">Cloud Push</span>
               </paper-button>
             </template>
+            <paper-button tabindex="0" on-tap="onNotificationsRouteClick">
+              <iron-icon icon="mail"></iron-icon>
+              <paper-badge label="{{notificationCount}}" class="green-badge"></paper-badge>
+            </paper-button>
             <a class="logout" on-tap="handleLogout">
               <iron-icon icon="lock-open"></iron-icon>
               <span class="hidden-phone">Logout</span>
             </a>
+            
 
             <!-- Application name -->
             <div class="middle middle-container center horizontal layout">
@@ -445,7 +458,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <section data-route="notifications">
                   <notifications-view notifications="[[notifications]]" users="[[users]]" 
                     last-notification-timestamp="[[lastNotificationTimestamp]]"
-                    notifications-by-user="[[notificationsByUser]]" notification-count="{{notificationCount}}">
+                    notifications-by-user="[[notificationsByUser]]" notification-count="[[notificationCount]]">
                   </notifications-view>
                 </section>
 
@@ -486,7 +499,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         notifications="{{notifications}}"
         users="{{users}}"
         last-notification-timestamp="{{lastNotificationTimestamp}}"
-        notifications-by-user="{{notificationsByUser}}">
+        notifications-by-user="{{notificationsByUser}}"
+        notification-count="{{notificationCount}}">
       </demo-data>
     </template>
   </template>
