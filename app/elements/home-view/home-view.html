@@ -18,10 +18,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
         padding: 10px;
       }
+      :host paper-card ::content .header .title-text{
+        color: #FFF !important;
+      }
+      :host ::content .title-text.over-image.paper-card{
+        text-shadow: 3px 1px 4px #000;
+      }
+      :host ::content .header.paper-card{
+        max-height: 200px;
+        border-bottom: 10px solid #027244;
+      }
+      @media (max-height: 600px) {
+        :host ::content .header.paper-card{
+          max-height: 80px;
+        }
+      }
     </style>
-    <h2 class="page-title">Introduction</h2>
-      
-    <p class="paper-font-body2">This use case illustrates targeted notifications to users that come in proximity of a Starbucks. The notification payload is composed for each user based on outside temperature, and gender. Notifications include user's first name, the applicable special, and the address of the nearest Starbucks.</p>
+
+    <paper-card heading="Introduction" image="images/Coffee-beans.jpg">
+      <div class="card-content">
+         <p class="paper-font-body2">This use case illustrates targeted notifications to users that come in proximity of a Starbucks. The notification payload is composed for each user based on outside temperature, and gender. Notifications include user's first name, the applicable special, and the address of the nearest Starbucks.</p>
+      </div>
+    </paper-card>
   </template>
   <script>
   (function() {

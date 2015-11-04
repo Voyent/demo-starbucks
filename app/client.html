@@ -74,6 +74,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       margin-right: auto;
       padding-top: 40px;
     }
+    @media (max-width: 600px) {
+      bridgeit-login-paper-card{
+        padding-top: 0;
+      }
+    }
   </style>
 
 </head>
@@ -89,7 +94,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       host="dev.bridgeit.io" logged-in="{{isLoggedIn}}" error="{{loginError}}" timeout="120">
     </bridgeit-auth-provider>
     <bridgeit-login-paper-card heading="Starbucks Demo Client Sign In" username="{{username}}" password="{{password}}" error="{{loginError}}"
-      auth-provider="authProvider" submit-label="Login" cancel-label="Cancel" hidden="{{isLoggedIn}}">
+      auth-provider="authProvider" submit-label="Login" cancel-label="Cancel" hidden="{{isLoggedIn}}"
+      header-image="images/Coffee-beans.jpg">
     </bridgeit-login-paper-card>
     <demo-view id="demoView" visible="{{isLoggedIn}}" username="[[username]]"></demo-view>
   </div>
