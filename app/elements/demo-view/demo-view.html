@@ -641,8 +641,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           window.alert('could not register for cloud push as supported mobile platform not detected');
           return;
         }
-        bridgeit.xio.push.registerCloudPush('dev.bridgeit.io', 'demos', 'starbucks', bridgeit.io.auth.getLastKnownUsername());
-        this.cloudPushRegistered = true;
+        var _this = this;
+        bridgeit.xio.push.registerCloudPush('dev.bridgeit.io', 'demos', 'starbucks', bridgeit.io.auth.getLastKnownUsername()).then(function(){
+          console.log('registered for cloud push promise returned');
+          _this.cloudPushRegistered = true;
+          _this.message = 'Registered for Cloud Push notifications';
+          _this.$$('#toast').show();
+        });
       },
 
       computeShowCloudPushLink: function(cloudPushCompatible, cloudPushRegistered){
@@ -656,13 +661,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _cloudPushSelectedChanged: function(){
-        if( this.cloudPushSelected ){
-          this.handleRegisterCloudPush();
+        if( this.cloudPushCompatible ){
+          if( this.cloudPushSelected ){
+            this.handleRegisterCloudPush();
+          }
+          else{
+            bridgeit.xio.push.unregisterCloudPush('dev.bridgeit.io', 'demos', 'starbucks', bridgeit.io.auth.getLastKnownUsername());
+            this.cloudPushRegistered = false;
+            var _this = this;
+            setTimeout(function(){
+              _this.message = 'Unregistered from Cloud Push notifications';
+              _this.$$('#toast').show();
+            },200);
+            
+          }
         }
-        else{
-          bridgeit.xio.push.unregisterCloudPush('dev.bridgeit.io', 'demos', 'starbucks', bridgeit.io.auth.getLastKnownUsername());
-          this.cloudPushRegistered = false;
-        }
+        
       }
     });
   })();
