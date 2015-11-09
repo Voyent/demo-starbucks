@@ -618,49 +618,58 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
-      onHomeRouteClick: function(){
+      onHomeRouteClick: function(e){
         this.onDataRouteClick();
         this.route = 'home';
+        e.preventDefault();
       },
 
-      onEventsRouteClick: function(){
+      onEventsRouteClick: function(e){
         this.onDataRouteClick();
         this.route = 'events';
+        e.preventDefault();
       },
 
-      onNotificationsRouteClick: function(){
+      onNotificationsRouteClick: function(e){
         this.onDataRouteClick();
         this.route = 'notifications';
+        e.preventDefault();
       },
 
-      onUsersRouteClick: function(){
+      onUsersRouteClick: function(e){
         this.onDataRouteClick();
         this.route = 'users';
+        e.preventDefault();
       },
 
-      onLocationsRouteClick: function(){
+      onLocationsRouteClick: function(e){
         this.onDataRouteClick();
         this.route = 'locations';
+        e.preventDefault();
       },
 
-      onActionsRouteClick: function(){
+      onActionsRouteClick: function(e){
         this.onDataRouteClick();
         this.route = 'actions';
+        e.preventDefault();
       },
 
-      onRoutesRouteClick: function(){
+      onRoutesRouteClick: function(e){
         this.onDataRouteClick();
         this.route = 'routes';
+        e.preventDefault();
       },
 
-      onContextRouteClick: function(){
+      onContextRouteClick: function(e){
         this.onDataRouteClick();
         this.route = 'context';
+        e.preventDefault();
       },
 
-      onLogsRouteClick: function(){
+      onLogsRouteClick: function(e){
         this.onDataRouteClick();
         this.route = 'logs';
+        e.preventDefault();
       },
 
       isEqual: function(arg1, arg2){
@@ -711,4 +720,5 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
   })();
   </script>
+
 </dom-module>
