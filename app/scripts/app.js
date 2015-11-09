@@ -25,7 +25,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // Listen for template bound event to know when bindings
   // have resolved and content has been stamped to the page
   app.addEventListener('dom-change', function() {
-    console.log('Our app is ready to rock!');
+    console.log('application loaded');
+
+    if( bridgeit.io.auth.isLoggedIn()){
+      setTimeout(function(){
+        setupNotificationListener();
+        //initialize lastNotificationTimestamp so user list displays
+        var demoData = app.$$('#demoData');
+        if( demoData ){
+           demoData.lastNotificationTimestamp = new Date().getTime();
+        }
+      }, 10000); 
+    }
   });
 
   // Startup the Notification Push Listener after login
@@ -82,17 +93,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
     });
     window.initializePushGroups(); //delegates to index.html for admins or client.html for regular users
-  }
-
-  if( bridgeit.io.auth.isLoggedIn()){
-    setTimeout(function(){
-      setupNotificationListener();
-      //initialize lastNotificationTimestamp so user list displays
-      var demoData = app.$.demoView.$$('#demoData');
-      if( demoData ){
-         demoData.lastNotificationTimestamp = new Date().getTime();
-      }
-    }, 5000); 
   }
 
   // See https://github.com/Polymer/polymer/issues/1381
