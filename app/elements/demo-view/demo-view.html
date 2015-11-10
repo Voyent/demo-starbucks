@@ -602,6 +602,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         username: {
           notify: true,
           type: String
+        },
+
+        host: {
+          type: String,
+          notify: true
         }
       },
 
@@ -682,7 +687,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           return;
         }
         var _this = this;
-        bridgeit.xio.push.registerCloudPush('dev.bridgeit.io', 'demos', 'starbucks', bridgeit.io.auth.getLastKnownUsername()).then(function(){
+        bridgeit.xio.push.registerCloudPush(this.host, 'demos', 'starbucks', bridgeit.io.auth.getLastKnownUsername()).then(function(){
           console.log('registered for cloud push promise returned');
           _this.cloudPushRegistered = true;
           _this.message = 'Registered for Cloud Push notifications';
@@ -706,7 +711,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             this.handleRegisterCloudPush();
           }
           else{
-            bridgeit.xio.push.unregisterCloudPush('dev.bridgeit.io', 'demos', 'starbucks', bridgeit.io.auth.getLastKnownUsername());
+            bridgeit.xio.push.unregisterCloudPush(this.host, 'demos', 'starbucks', bridgeit.io.auth.getLastKnownUsername());
             this.cloudPushRegistered = false;
             var _this = this;
             setTimeout(function(){

@@ -15,6 +15,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // Learn more about auto-binding templates at http://goo.gl/Dx1u2g
   var app = document.querySelector('#app');
 
+  //set default host;
+  app.host = 'dev.bridgeit.io';
+
   app.displayInstalledToast = function() {
     // Check to make sure caching is actually enabled—it won't be in the dev environment.
     if (!document.querySelector('platinum-sw-cache').disabled) {
@@ -29,7 +32,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     if( bridgeit.io.auth.isLoggedIn()){
       setTimeout(function(){
+
         setupNotificationListener();
+
         //initialize lastNotificationTimestamp so user list displays
         var demoData = app.$$('#demoData');
         if( demoData ){
@@ -46,7 +51,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   });
 
   function setupNotificationListener(){
-    bridgeit.xio.push.attach('http://dev.bridgeit.io/pushio/demos/realms/starbucks', bridgeit.io.auth.getLastKnownUsername());
+    var demoView = app.$.demoView;
+    bridgeit.xio.push.attach('http://' + demoView.host + '/pushio/demos/realms/starbucks', bridgeit.io.auth.getLastKnownUsername());
     bridgeit.xio.push.addListener(function (payload) {
         console.log('Notification: ', payload);
 
