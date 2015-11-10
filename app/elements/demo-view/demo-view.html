@@ -121,8 +121,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         cursor:pointer;
       }
 
-      a[data-route="*"]{
+      paper-menu a[data-route]{
         position: relative;
+        cursor: pointer;
       }
 
       paper-badge{
@@ -321,42 +322,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <span>Home</span>
               </a>
 
-              <a id="usersLink" data-route="users" href="#!/users" on-tap="onUsersRouteClick">
+              <a id="usersLink" data-route="users" on-tap="onUsersRouteClick">
                 <span class="demo-step-badge">1</span>
                 <span>Users</span>
               </a>
 
-              <a data-route="locations" href="#!/locations" on-tap="onLocationsRouteClick">
+              <a data-route="locations" on-tap="onLocationsRouteClick">
                 <span class="demo-step-badge">2</span>
                 <span>Locations</span>
               </a>
 
-              <a data-route="context" href="#!/context" on-tap="onContextRouteClick">
+              <a data-route="context" on-tap="onContextRouteClick">
                 <span class="demo-step-badge">3</span>
                 <span>Context</span>
               </a>
 
-              <a data-route="actions" href="#!/actions" on-tap="onActionsRouteClick">
+              <a data-route="actions" on-tap="onActionsRouteClick">
                 <span class="demo-step-badge">4</span>
                 <span>Actions</span>
               </a>
 
-              <a data-route="routes" href="#!/routes" on-tap="onRoutesRouteClick">
+              <a data-route="routes" on-tap="onRoutesRouteClick">
                 <span class="demo-step-badge">5</span>
                 <span>Routes</span>
               </a>
 
-              <a data-route="notifications" href="#!/notifications" on-tap="onNotificationsRouteClick">
+              <a data-route="notifications" on-tap="onNotificationsRouteClick">
                 <span class="demo-step-badge">5</span>
                 <span>Notifications</span>
               </a>
 
-              <a data-route="events" href="#!/events" on-tap="onEventsRouteClick">
+              <a data-route="events" on-tap="onEventsRouteClick">
                 <span class="demo-step-badge">7</span>
                 <span>Events</span>
               </a>
 
-              <a data-route="logs" href="#!/logs" on-tap="onLogsRouteClick">
+              <a data-route="logs" on-tap="onLogsRouteClick">
                 <span class="demo-step-badge">8</span>
                 <span>Logs</span>
               </a>
@@ -365,7 +366,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             <template is="dom-if" if="{{isUser}}">
 
-              <a data-route="notifications" href="#!/notifications" on-tap="onNotificationsRouteClick">
+              <a data-route="notifications" on-tap="onNotificationsRouteClick">
                 <span class="demo-step-badge">1</span>
                 <span>Notifications</span>
               </a>
@@ -611,58 +612,46 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.visible = false;
       },
 
-      onDataRouteClick: function() {
+      onDataRouteClick: function(e, route) {
         var drawerPanel = this.$$('#paperDrawerPanel');
         if (drawerPanel.narrow) {
           drawerPanel.closeDrawer();
         }
+        this.route = route;
+        setTimeout(function(){
+          window.location.hash = '!/' + route;
+        },0);
+        e.preventDefault();
       },
 
-      onHomeRouteClick: function(){
-        this.onDataRouteClick();
-        this.route = 'home';
+      onHomeRouteClick: function(e){
+        this.onDataRouteClick(e, 'home');
       },
-
-      onEventsRouteClick: function(){
-        this.onDataRouteClick();
-        this.route = 'events';
+      onEventsRouteClick: function(e){
+        this.onDataRouteClick(e, 'events');
       },
-
-      onNotificationsRouteClick: function(){
-        this.onDataRouteClick();
-        this.route = 'notifications';
+      onNotificationsRouteClick: function(e){
+        this.onDataRouteClick(e, 'notifications');
       },
-
-      onUsersRouteClick: function(){
-        this.onDataRouteClick();
-        this.route = 'users';
+      onUsersRouteClick: function(e){
+        this.onDataRouteClick(e, 'users');
       },
-
-      onLocationsRouteClick: function(){
-        this.onDataRouteClick();
-        this.route = 'locations';
+      onLocationsRouteClick: function(e){
+        this.onDataRouteClick(e, 'locations');
       },
-
-      onActionsRouteClick: function(){
-        this.onDataRouteClick();
-        this.route = 'actions';
+      onActionsRouteClick: function(e){
+        this.onDataRouteClick(e, 'actions');
       },
-
-      onRoutesRouteClick: function(){
-        this.onDataRouteClick();
-        this.route = 'routes';
+      onRoutesRouteClick: function(e){
+        this.onDataRouteClick(e, 'routes');
       },
-
-      onContextRouteClick: function(){
-        this.onDataRouteClick();
-        this.route = 'context';
+      onContextRouteClick: function(e){
+        this.onDataRouteClick(e, 'context');
       },
-
-      onLogsRouteClick: function(){
-        this.onDataRouteClick();
-        this.route = 'logs';
+      onLogsRouteClick: function(e){
+        this.onDataRouteClick(e, 'logs');
       },
-
+      
       isEqual: function(arg1, arg2){
         return arg1 === arg2;
       },
