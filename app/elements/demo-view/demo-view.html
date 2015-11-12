@@ -303,183 +303,184 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </style>
     <template is="dom-if" if="{{visible}}">
-       <paper-drawer-panel id="paperDrawerPanel">
-        <!-- Drawer Scroll Header Panel -->
-        <paper-scroll-header-panel drawer fixed>
+      <iron-media-query query="(min-width: 600px) and (max-width: 800px)" query-matches="{{vgaWidth}}"></iron-media-query>
+      <paper-drawer-panel id="paperDrawerPanel" drawer-width="{{drawerWidth}}">
+      <!-- Drawer Scroll Header Panel -->
+      <paper-scroll-header-panel drawer fixed>
 
-          <!-- Drawer Toolbar -->
-          <paper-toolbar id="drawerToolbar" class="sidebar">
-            <span class="paper-font-title">Demo Steps</span>
-          </paper-toolbar>
+        <!-- Drawer Toolbar -->
+        <paper-toolbar id="drawerToolbar" class="sidebar">
+          <span class="paper-font-title">Demo Steps</span>
+        </paper-toolbar>
 
-          <!-- Drawer Content -->
-          <paper-menu class="list" attr-for-selected="data-route" selected="[[route]]">
+        <!-- Drawer Content -->
+        <paper-menu class="list" attr-for-selected="data-route" selected="[[route]]">
+
+          <template is="dom-if" if="{{isAdmin}}">
+
+            <a data-route="home" on-click="onHomeRouteClick">
+              <iron-icon icon="home"></iron-icon>
+              <span>Home</span>
+            </a>
+
+            <a id="usersLink" data-route="users" on-click="onUsersRouteClick">
+              <span class="demo-step-badge">1</span>
+              <span>Users</span>
+            </a>
+
+            <a data-route="locations" on-click="onLocationsRouteClick">
+              <span class="demo-step-badge">2</span>
+              <span on-click="onLocationsRouteClick">Locations</span>
+            </a>
+
+            <a data-route="context" on-click="onContextRouteClick">
+              <span class="demo-step-badge">3</span>
+              <span>Context</span>
+            </a>
+
+            <a data-route="actions" on-click="onActionsRouteClick">
+              <span class="demo-step-badge">4</span>
+              <span>Actions</span>
+            </a>
+
+            <a data-route="routes" on-click="onRoutesRouteClick">
+              <span class="demo-step-badge">5</span>
+              <span>Routes</span>
+            </a>
+
+            <a data-route="notifications" on-click="onNotificationsRouteClick">
+              <span class="demo-step-badge">5</span>
+              <span>Notifications</span>
+            </a>
+
+            <a data-route="events" on-click="onEventsRouteClick">
+              <span class="demo-step-badge">7</span>
+              <span>Events</span>
+            </a>
+
+            <a data-route="logs" on-click="onLogsRouteClick">
+              <span class="demo-step-badge">8</span>
+              <span>Logs</span>
+            </a>
+
+          </template>
+
+          <template is="dom-if" if="{{isUser}}">
+
+            <a data-route="notifications" on-click="onNotificationsRouteClick">
+              <span class="demo-step-badge">1</span>
+              <span>Notifications</span>
+            </a>
+
+          </template>
+
+        </paper-menu>
+      </paper-scroll-header-panel>
+
+      <!-- Main Area -->
+      <paper-scroll-header-panel main id="headerPanelMain" condenses keep-condensed-header>
+
+        <!-- Main Toolbar -->
+        <paper-toolbar id="mainToolbar" class="tall">
+          <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
+          <span class="flex"></span>
+
+          <!-- Toolbar icons -->
+          <template is="dom-if" if="{{cloudPushCompatible}}">
+            <paper-button tabindex="0" toggles active="{{cloudPushSelected}}">
+              <iron-icon icon="cloud-download"></iron-icon>
+              <span class="hidden-phone">Cloud Push</span>
+            </paper-button>
+          </template>
+          <paper-button tabindex="0" on-click="onNotificationsRouteClick">
+            <iron-icon icon="mail"></iron-icon>
+            <paper-badge label="{{notificationCount}}" class="green-badge"></paper-badge>
+          </paper-button>
+          <a class="logout" on-click="handleLogout">
+            <iron-icon icon="lock-open"></iron-icon>
+            <span class="hidden-phone">Logout</span>
+          </a>
+          
+
+          <!-- Application name -->
+          <div class="middle middle-container center horizontal layout">
+            <div class="app-name">
+              Starbucks Demo <small>(<span>[[username]]</span>)</small>
+            </div>
+          </div>
+
+          <!-- Application sub title -->
+          <div class="bottom bottom-container center horizontal layout hidden-phone">
+            <div class="bottom-title paper-font-subhead"><span class="quote">&ldquo;</span>To inspire and nurture the human spirit – one person, one cup and one neighborhood at a time.<span class="quote">&rdquo;</span>&nbsp;&nbsp;&nbsp;- Starbucks Motto</div>
+          </div>
+
+        </paper-toolbar>
+
+        <!-- Main Content -->
+        <div class="content">
+          <iron-pages attr-for-selected="data-route" selected="{{route}}">
+
+            <section data-route="home">
+              <home-view></home-view>
+            </section>
 
             <template is="dom-if" if="{{isAdmin}}">
 
-              <a data-route="home" href="#!/" on-tap="onHomeRouteClick">
-                <iron-icon icon="home"></iron-icon>
-                <span>Home</span>
-              </a>
+              <section data-route="users">
+                <users-view visible="{{isEqual('users', route)}}" users="{{users}}"></users-view>
+              </section>
 
-              <a id="usersLink" data-route="users" on-tap="onUsersRouteClick">
-                <span class="demo-step-badge">1</span>
-                <span>Users</span>
-              </a>
+              <section data-route="locations">
+                <locations-view visible="{{isEqual('locations', route)}}"></locations-view>
+              </section>
 
-              <a data-route="locations" on-tap="onLocationsRouteClick">
-                <span class="demo-step-badge">2</span>
-                <span>Locations</span>
-              </a>
+              <section data-route="actions">
+                <actions-view visible="{{isEqual('actions', route)}}">></actions-view>
+              </section>
 
-              <a data-route="context" on-tap="onContextRouteClick">
-                <span class="demo-step-badge">3</span>
-                <span>Context</span>
-              </a>
+              <section data-route="routes">
+                <routes-view visible="{{isEqual('routes', route)}}"></routes-view>
+              </section>
 
-              <a data-route="actions" on-tap="onActionsRouteClick">
-                <span class="demo-step-badge">4</span>
-                <span>Actions</span>
-              </a>
+              <section data-route="context">
+                <context-view visible="{{isEqual('context', route)}}"
+                  current-temp="{{currentTemp}}"
+                  threshold-temp="{{thresholdTemp}}"
+                  hot-male-template="{{hotMaleTemplate}}"
+                  cold-male-template="{{coldMaleTemplate}}"
+                  hot-female-template="{{hotFemaleTemplate}}"
+                  cold-female-template="{{coldFemaleTemplate}}">
+                </context-view>
+              </section>
 
-              <a data-route="routes" on-tap="onRoutesRouteClick">
-                <span class="demo-step-badge">5</span>
-                <span>Routes</span>
-              </a>
+              <section data-route="events">
+                <events-view></events-view>
+              </section>
 
-              <a data-route="notifications" on-tap="onNotificationsRouteClick">
-                <span class="demo-step-badge">5</span>
-                <span>Notifications</span>
-              </a>
+              <section data-route="notifications">
+                <notifications-view notifications="[[notifications]]" users="[[users]]" 
+                  last-notification-timestamp="[[lastNotificationTimestamp]]"
+                  notifications-by-user="[[notificationsByUser]]" notification-count="[[notificationCount]]">
+                </notifications-view>
+              </section>
 
-              <a data-route="events" on-tap="onEventsRouteClick">
-                <span class="demo-step-badge">7</span>
-                <span>Events</span>
-              </a>
-
-              <a data-route="logs" on-tap="onLogsRouteClick">
-                <span class="demo-step-badge">8</span>
-                <span>Logs</span>
-              </a>
+              <section data-route="logs">
+                <logs-view visible="{{isEqual('logs', route)}}"></logs-view>
+              </section>
 
             </template>
 
             <template is="dom-if" if="{{isUser}}">
 
-              <a data-route="notifications" on-tap="onNotificationsRouteClick">
-                <span class="demo-step-badge">1</span>
-                <span>Notifications</span>
-              </a>
-
-            </template>
-
-          </paper-menu>
-        </paper-scroll-header-panel>
-
-        <!-- Main Area -->
-        <paper-scroll-header-panel main id="headerPanelMain" condenses keep-condensed-header>
-
-          <!-- Main Toolbar -->
-          <paper-toolbar id="mainToolbar" class="tall">
-            <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
-            <span class="flex"></span>
-
-            <!-- Toolbar icons -->
-            <template is="dom-if" if="{{cloudPushCompatible}}">
-              <paper-button tabindex="0" toggles active="{{cloudPushSelected}}">
-                <iron-icon icon="cloud-download"></iron-icon>
-                <span class="hidden-phone">Cloud Push</span>
-              </paper-button>
-            </template>
-            <paper-button tabindex="0" on-tap="onNotificationsRouteClick">
-              <iron-icon icon="mail"></iron-icon>
-              <paper-badge label="{{notificationCount}}" class="green-badge"></paper-badge>
-            </paper-button>
-            <a class="logout" on-tap="handleLogout">
-              <iron-icon icon="lock-open"></iron-icon>
-              <span class="hidden-phone">Logout</span>
-            </a>
-            
-
-            <!-- Application name -->
-            <div class="middle middle-container center horizontal layout">
-              <div class="app-name">
-                Starbucks Demo <small>(<span>[[username]]</span>)</small>
-              </div>
-            </div>
-
-            <!-- Application sub title -->
-            <div class="bottom bottom-container center horizontal layout hidden-phone">
-              <div class="bottom-title paper-font-subhead"><span class="quote">&ldquo;</span>To inspire and nurture the human spirit – one person, one cup and one neighborhood at a time.<span class="quote">&rdquo;</span>&nbsp;&nbsp;&nbsp;- Starbucks Motto</div>
-            </div>
-
-          </paper-toolbar>
-
-          <!-- Main Content -->
-          <div class="content">
-            <iron-pages attr-for-selected="data-route" selected="{{route}}">
-
-              <section data-route="home">
-                <home-view></home-view>
+              <section data-route="notifications">
+                <notifications-view notifications="[[notifications]]"></notifications-view>
               </section>
 
-              <template is="dom-if" if="{{isAdmin}}">
+            </template>
 
-                <section data-route="users">
-                  <users-view visible="{{isEqual('users', route)}}" users="{{users}}"></users-view>
-                </section>
-
-                <section data-route="locations">
-                  <locations-view visible="{{isEqual('locations', route)}}"></locations-view>
-                </section>
-
-                <section data-route="actions">
-                  <actions-view visible="{{isEqual('actions', route)}}">></actions-view>
-                </section>
-
-                <section data-route="routes">
-                  <routes-view visible="{{isEqual('routes', route)}}"></routes-view>
-                </section>
-
-                <section data-route="context">
-                  <context-view visible="{{isEqual('context', route)}}"
-                    current-temp="{{currentTemp}}"
-                    threshold-temp="{{thresholdTemp}}"
-                    hot-male-template="{{hotMaleTemplate}}"
-                    cold-male-template="{{coldMaleTemplate}}"
-                    hot-female-template="{{hotFemaleTemplate}}"
-                    cold-female-template="{{coldFemaleTemplate}}">
-                  </context-view>
-                </section>
-
-                <section data-route="events">
-                  <events-view></events-view>
-                </section>
-
-                <section data-route="notifications">
-                  <notifications-view notifications="[[notifications]]" users="[[users]]" 
-                    last-notification-timestamp="[[lastNotificationTimestamp]]"
-                    notifications-by-user="[[notificationsByUser]]" notification-count="[[notificationCount]]">
-                  </notifications-view>
-                </section>
-
-                <section data-route="logs">
-                  <logs-view visible="{{isEqual('logs', route)}}"></logs-view>
-                </section>
-
-              </template>
-
-              <template is="dom-if" if="{{isUser}}">
-
-                <section data-route="notifications">
-                  <notifications-view notifications="[[notifications]]"></notifications-view>
-                </section>
-
-              </template>
-
-            </iron-pages>
-          </div>
-        </paper-scroll-header-panel>
+          </iron-pages>
+        </div>
+      </paper-scroll-header-panel>
       </paper-drawer-panel>
 
       <paper-toast id="toast">
@@ -603,6 +604,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         username: {
           notify: true,
           type: String
+        },
+
+        host: {
+          type: String,
+          notify: true
+        },
+
+        drawerWidth: {
+          type: String,
+          notify: true,
+          computed: '_computeDrawerWidth(vgaWidth)'
         }
       },
 
@@ -613,14 +625,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       onDataRouteClick: function(e, route) {
+        console.log('onDataRouteClick(' + route + ')');
         var drawerPanel = this.$$('#paperDrawerPanel');
         if (drawerPanel.narrow) {
           drawerPanel.closeDrawer();
         }
         this.route = route;
-        setTimeout(function(){
-          window.location.hash = '!/' + route;
-        },0);
+        window.location.hash = '!/' + route;
         e.preventDefault();
       },
 
@@ -686,7 +697,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             this.handleRegisterCloudPush();
           }
           else{
-            bridgeit.xio.push.unregisterCloudPush('dev.bridgeit.io', 'demos', 'starbucks');
+            bridgeit.xio.push.unregisterCloudPush(this.host, 'demos', 'starbucks');
             this.cloudPushRegistered = false;
             var _this = this;
             setTimeout(function(){
@@ -695,6 +706,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             },200);
             
           }
+        }
+      },
+
+      _computeDrawerWidth: function(vgaWidth){
+        if( vgaWidth ){
+          return '180px';
+        }
+        else{
+          return '256px';
         }
       }
     });
