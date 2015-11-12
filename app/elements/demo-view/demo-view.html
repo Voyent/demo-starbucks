@@ -303,7 +303,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </style>
     <template is="dom-if" if="{{visible}}">
-       <paper-drawer-panel id="paperDrawerPanel">
+      <iron-media-query query="(min-width: 600px) and (max-width: 800px)" query-matches="{{vgaWidth}}"></iron-media-query>
+       <paper-drawer-panel id="paperDrawerPanel" drawer-width="{{drawerWidth}}">
         <!-- Drawer Scroll Header Panel -->
         <paper-scroll-header-panel drawer fixed>
 
@@ -608,7 +609,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         host: {
           type: String,
           notify: true
-        }
+        },
+
+        drawerWidth: {
+          type: String,
+          notify: true,
+          computed: '_computeDrawerWidth(vgaWidth)'
+         }
       },
 
       handleLogout: function(){
@@ -708,6 +715,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             },200);
             
           }
+        }
+      },
+
+      _computeDrawerWidth: function(vgaWidth){
+        if( vgaWidth ){
+          return '180px';
+        }
+        else{
+          return '256px';
         }
       }
     });
