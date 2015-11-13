@@ -19,6 +19,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       paper-scroll-header-panel {
         height: 100%;
+        --paper-scroll-header-container: {
+          z-index:0;
+        };
       }
       paper-menu iron-icon {
         margin-right: 33px;
@@ -400,7 +403,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <iron-icon icon="lock-open"></iron-icon>
             <span class="hidden-phone">Logout</span>
           </a>
-          
+
 
           <!-- Application name -->
           <div class="middle middle-container center horizontal layout">
@@ -458,7 +461,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </section>
 
               <section data-route="notifications">
-                <notifications-view notifications="[[notifications]]" users="[[users]]" 
+                <notifications-view notifications="[[notifications]]" users="[[users]]"
                   last-notification-timestamp="[[lastNotificationTimestamp]]"
                   notifications-by-user="[[notificationsByUser]]" notification-count="[[notificationCount]]">
                 </notifications-view>
@@ -662,7 +665,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       onLogsRouteClick: function(e){
         this.onDataRouteClick(e, 'logs');
       },
-      
+
       isEqual: function(arg1, arg2){
         return arg1 === arg2;
       },
@@ -704,7 +707,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               _this.message = 'Unregistered from Cloud Push notifications';
               _this.$$('#toast').show();
             },200);
-            
+
           }
         }
       },
