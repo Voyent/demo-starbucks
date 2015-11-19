@@ -62,13 +62,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
   <!-- endbuild -->
 
-  <!-- POLYMER COMPONENT DEPENDENCIES - THE BUILD PROCESS SHOULD BE INCLUDE THIS AUTOMATICALLY IN THE FUTURE -->
+  <!-- POLYMER COMPONENT DEPENDENCIES - THE BUILD PROCESS SHOULD BE INCLUDE THIS AUTOMATICALLY IN THE FUTURE (TODO) -->
   <script src="bower_components/jQuery-QueryBuilder/dist/js/query-builder.standalone.min.js"></script>
+  <script src="bower_components/ace-builds/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+  <script src="bower_components/handlebars/handlebars.js"></script>
+  <script src="bower_components/typeahead/dist/typeahead.jquery.js"></script>
   <link type="text/css" rel="stylesheet" href="bower_components/jQuery-QueryBuilder/dist/css/query-builder.default.min.css">
   <link type="text/css" rel="stylesheet" href="bower_components/bridgeit-web-components/bridgeit-query-editor/bridgeit-query-editor.min.css">
   <link type="text/css" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   <link type="text/css" rel="stylesheet" href="bower_components/bridgeit-web-components/bridgeit-event-monitor/bridgeit-event-monitor.css">
-  <script src="bower_components/ace-builds/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 
   <!-- will be replaced with elements/elements.vulcanized.html -->
   <link rel="import" href="elements/elements.html">
@@ -87,7 +89,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         padding-top: 0;
       }
     }
-  
+
   </style>
 
 </head>
@@ -106,7 +108,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       auth-provider="authProvider" submit-label="Login" cancel-label="Cancel" hidden="{{isLoggedIn}}" login-as-admin="true"
       header-image="images/Coffee-beans.jpg">
       <paper-input id="host" required label="Host" placeholder="Enter the Host" value="{{host}}">
-        <paper-icon-button suffix icon="clear" 
+        <paper-icon-button suffix icon="clear"
           onclick="document.querySelector('#host').value = '';" tabindex="-1">
         </paper-icon-button>
       </paper-input>
@@ -149,7 +151,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           });
           demoView.$$('demo-data').users = users;
         }, 5000);
-        
+
       }).catch( function(error){
         console.log('error loading users for users-view: ' + error);
         document.querySelector('#app').fire('bridgeit-error', {error: Error('Could not fetch users list: ' + error.responseText)});
