@@ -89,38 +89,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'events-view',
 
       properties: {
-        foo: {
-          type: String,
-          value: 'events-view',
-          notify: true
+        visible: {
+          type: Boolean,
+          notify: true,
+          observer:'initializeQueryEditor'
         }
       },
 
       ready: function() {
-        var eventMonitor = this.$$('#eventMonitor');
-        var queryEditor = this.$$('#queryEditor');
-        queryEditor.setAttribute('account', bridgeit.io.auth.getLastKnownAccount());
-        queryEditor.setAttribute('realm', bridgeit.io.auth.getLastKnownRealm());
-        queryEditor.setAttribute('accesstoken', bridgeit.io.auth.getLastAccessToken());
+        
+      },
 
-        // Listen for queryExecuted event
-        queryEditor.addEventListener('queryExecuted', function(e) {
-            var res = e.detail.results;
+      initializeQueryEditor: function(){
+        if( this.visible ){
+          var eventMonitor = this.$$('#eventMonitor');
+          var queryEditor = this.$$('#queryEditor');
+          queryEditor.setAttribute('account', bridgeit.io.auth.getLastKnownAccount());
+          queryEditor.setAttribute('realm', bridgeit.io.auth.getLastKnownRealm());
+          queryEditor.setAttribute('accesstoken', bridgeit.io.auth.getLastAccessToken());
 
-            // Before we process the data we want to change the dates (data.time field)
-            // This is because the dates come from the queryEditor as UTC
-            // But we want to display them in the table and graph as the local timezone
-            if (typeof res !== 'undefined' && res !== null && res.length !== 0) {
-                for (var i = 0; i < res.length; i++) {
-                    res[i].time = new Date(res[i].time);
-                }
-            }
+          // Listen for queryExecuted event
+          queryEditor.addEventListener('queryExecuted', function(e) {
+              var res = e.detail.results;
 
-            eventMonitor.show(e.detail.results);
-        });
+              // Before we process the data we want to change the dates (data.time field)
+              // This is because the dates come from the queryEditor as UTC
+              // But we want to display them in the table and graph as the local timezone
+              if (typeof res !== 'undefined' && res !== null && res.length !== 0) {
+                  for (var i = 0; i < res.length; i++) {
+                      res[i].time = new Date(res[i].time);
+                  }
+              }
 
-        queryEditor.reloadEditor();
-        queryEditor.fetchQueryList();
+              eventMonitor.show(e.detail.results);
+          });
+
+          queryEditor.reloadEditor();
+          queryEditor.fetchQueryList();
+        }
       }
     });
   })();

@@ -10,6 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 (function(document) {
   'use strict';
 
+  function finishLazyLoading(){
   // Grab a reference to our auto-binding template
   // and give it some initial binding values
   // Learn more about auto-binding templates at http://goo.gl/Dx1u2g
@@ -28,19 +29,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // Listen for template bound event to know when bindings
   // have resolved and content has been stamped to the page
   app.addEventListener('dom-change', function() {
-    console.log('application loaded');
-
+      console.log('Initializing demo');
     if( bridgeit.io.auth.isLoggedIn()){
       setTimeout(function(){
+         setupNotificationListener();
 
-        setupNotificationListener();
-
-        //initialize lastNotificationTimestamp so user list displays
-        var demoData = app.$$('#demoData');
+          var demoData = app.$.demoView.$$('#demoData');
         if( demoData ){
            demoData.lastNotificationTimestamp = new Date().getTime();
         }
-      }, 10000); 
+        }, 5000); 
     }
   });
 
@@ -51,7 +49,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   });
 
   function setupNotificationListener(){
-    var demoView = app.$.demoView;
     bridgeit.xio.push.attach('http://' + demoView.host + '/pushio/demos/realms/starbucks', bridgeit.io.auth.getLastKnownUsername());
     bridgeit.xio.push.addListener(function (payload) {
         console.log('Notification: ', payload);
@@ -102,6 +99,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   }
 
   // See https://github.com/Polymer/polymer/issues/1381
+
+    // See https://github.com/Polymer/polymer/issues/1381
   window.addEventListener('WebComponentsReady', function() {
     // imports are loaded and elements have been registered
   });
@@ -155,5 +154,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.scrollPageToTop = function() {
     document.getElementById('mainContainer').scrollTop = 0;
   };
+  }
+
+  var webComponentsSupported = (
+    'registerElement' in document &&
+    'import' in document.createElement('link') &&
+    'content' in document.createElement('template'));
+
+  if( !webComponentsSupported ){
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = 'bower_components/webcomponentsjs/webcomponents-lite.min.js';
+    script.onload = finishLazyLoading;
+    document.head.appendChild(script);
+  }
+  else{
+    finishLazyLoading();
+  }  
 
 })(document);
