@@ -457,7 +457,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </section>
 
               <section data-route="events">
-                <events-view></events-view>
+                  <events-view visible="{{isEqual('events', route)}}"></events-view>
               </section>
 
               <section data-route="notifications">
@@ -641,27 +641,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       onHomeRouteClick: function(e){
         this.onDataRouteClick(e, 'home');
       },
+
       onEventsRouteClick: function(e){
         this.onDataRouteClick(e, 'events');
       },
+
       onNotificationsRouteClick: function(e){
         this.onDataRouteClick(e, 'notifications');
       },
+
       onUsersRouteClick: function(e){
         this.onDataRouteClick(e, 'users');
       },
+
       onLocationsRouteClick: function(e){
         this.onDataRouteClick(e, 'locations');
       },
+
       onActionsRouteClick: function(e){
         this.onDataRouteClick(e, 'actions');
       },
+
       onRoutesRouteClick: function(e){
         this.onDataRouteClick(e, 'routes');
       },
+
       onContextRouteClick: function(e){
         this.onDataRouteClick(e, 'context');
       },
+
       onLogsRouteClick: function(e){
         this.onDataRouteClick(e, 'logs');
       },
@@ -676,7 +684,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           return;
         }
         var _this = this;
-        bridgeit.xio.push.registerCloudPush('dev.bridgeit.io', 'demos', 'starbucks', bridgeit.io.auth.getLastKnownUsername()).then(function(){
+        bridgeit.xio.push.registerCloudPush(this.host, 'demos', 'starbucks', bridgeit.io.auth.getLastKnownUsername()).then(function(){
           console.log('registered for cloud push promise returned');
           _this.cloudPushRegistered = true;
           _this.message = 'Registered for Cloud Push notifications';
@@ -723,4 +731,5 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
   })();
   </script>
+
 </dom-module>

@@ -89,14 +89,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'events-view',
 
       properties: {
-        foo: {
-          type: String,
-          value: 'events-view',
-          notify: true
+        visible: {
+          type: Boolean,
+          notify: true,
+          observer:'initializeQueryEditor'
         }
       },
 
       ready: function() {
+        
+      },
+
+      initializeQueryEditor: function(){
+        if( this.visible ){
         var eventMonitor = this.$$('#eventMonitor');
         var queryEditor = this.$$('#queryEditor');
         queryEditor.setAttribute('account', bridgeit.io.auth.getLastKnownAccount());
@@ -121,6 +126,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         queryEditor.reloadEditor();
         queryEditor.fetchQueryList();
+        }
       }
     });
   })();
