@@ -129,6 +129,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         cursor: pointer;
       }
 
+      paper-menu a > *, paper-menu paper-item > *, paper-menu paper-icon-item > * {
+        pointer-events: none;
+      }
+
       paper-badge{
         margin-top: 9px;
         margin-left: -23px;
@@ -322,58 +326,58 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <template is="dom-if" if="{{isAdmin}}">
 
             <a data-route="home" on-click="onHomeRouteClick">
-                <iron-icon icon="home"></iron-icon>
-                <span>Home</span>
-              </a>
+              <iron-icon icon="home"></iron-icon>
+              <span >Home</span>
+            </a>
 
             <a id="usersLink" data-route="users" on-click="onUsersRouteClick">
-                <span class="demo-step-badge">1</span>
-                <span>Users</span>
-              </a>
+              <span class="demo-step-badge">1</span>
+              <span>Users</span>
+            </a>
 
             <a data-route="locations" on-click="onLocationsRouteClick">
-                <span class="demo-step-badge">2</span>
-                <span>Locations</span>
-              </a>
+              <span class="demo-step-badge">2</span>
+              <span>Locations</span>
+            </a>
 
             <a data-route="context" on-click="onContextRouteClick">
-                <span class="demo-step-badge">3</span>
-                <span>Context</span>
-              </a>
+              <span class="demo-step-badge">3</span>
+              <span>Context</span>
+            </a>
 
             <a data-route="actions" on-click="onActionsRouteClick">
-                <span class="demo-step-badge">4</span>
-                <span>Actions</span>
-              </a>
+              <span class="demo-step-badge">4</span>
+              <span>Actions</span>
+            </a>
 
             <a data-route="routes" on-click="onRoutesRouteClick">
-                <span class="demo-step-badge">5</span>
-                <span>Routes</span>
-              </a>
+              <span class="demo-step-badge">5</span>
+              <span>Routes</span>
+            </a>
 
             <a data-route="notifications" on-click="onNotificationsRouteClick">
-                <span class="demo-step-badge">5</span>
-                <span>Notifications</span>
-              </a>
+              <span class="demo-step-badge">5</span>
+              <span>Notifications</span>
+            </a>
 
             <a data-route="events" on-click="onEventsRouteClick">
-                <span class="demo-step-badge">7</span>
-                <span>Events</span>
-              </a>
+              <span class="demo-step-badge">7</span>
+              <span>Events</span>
+            </a>
 
             <a data-route="logs" on-click="onLogsRouteClick">
-                <span class="demo-step-badge">8</span>
-                <span>Logs</span>
-              </a>
+              <span class="demo-step-badge">8</span>
+              <span>Logs</span>
+            </a>
 
             </template>
 
             <template is="dom-if" if="{{isUser}}">
 
             <a data-route="notifications" on-click="onNotificationsRouteClick">
-                <span class="demo-step-badge">1</span>
-                <span>Notifications</span>
-              </a>
+              <span class="demo-step-badge">1</span>
+              <span>Notifications</span>
+            </a>
 
             </template>
 

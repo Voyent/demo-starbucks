@@ -49,7 +49,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   });
 
   function setupNotificationListener(){
-    bridgeit.xio.push.attach('http://' + demoView.host + '/pushio/demos/realms/starbucks', bridgeit.io.auth.getLastKnownUsername());
+    bridgeit.xio.push.attach('http://' + document.querySelector('#app').$demoView.host + '/pushio/demos/realms/starbucks', bridgeit.io.auth.getLastKnownUsername());
     bridgeit.xio.push.addListener(function (payload) {
         console.log('Notification: ', payload);
 
