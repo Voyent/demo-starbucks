@@ -627,8 +627,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       handleLogout: function(){
         bridgeit.xio.push.removeListener();
-        bridgeit.io.auth.disconnect();
-        this.visible = false;
+        document.getElementById('authProvider').logout();
       },
 
       onDataRouteClick: function(e, route) {
