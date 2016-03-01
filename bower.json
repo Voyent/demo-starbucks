@@ -21,6 +21,6 @@
     "paper-menu": "4fecb43601",
     "polymer": "^1.2.1",
     "es6-promise": "~3.0.2",
-    "bridgeit.js": "1.0.7"
+    "bridgeit.js": "#gh-pages"
   }
 }
