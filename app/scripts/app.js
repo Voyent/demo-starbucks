@@ -111,6 +111,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     window.addEventListener('bridgeit-session-expired', function(e){
       console.log('demo app received event bridgeit-session-expired', e);
       bridgeit.xio.push.disconnect();
+      window.alert('Session Expired');
     });
 
     // Main area's paper-scroll-header-panel custom condensing transformation of
