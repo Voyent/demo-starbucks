@@ -145,6 +145,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       if (drawerPanel.narrow) {
         drawerPanel.closeDrawer();
       }
+      bridgeit.io.auth.updateLastActiveTimestamp();
     };
 
     // Scroll page to top and expand header
