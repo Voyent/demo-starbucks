@@ -25,20 +25,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         document.querySelector('#caching-complete').show();
       }
     };
-    
+
     function setupNotificationListener(){
       bridgeit.xio.push.attach('http://'+app.host+'/pushio/demos/realms/starbucks', bridgeit.io.auth.getLastKnownUsername());
       bridgeit.xio.push.addListener(function (payload) {
           console.log('Notification: ', payload);
 
-          //normalize payload TODO!!
-          if( payload.message && typeof payload.message === 'object' && payload.message.message){
-            payload.message = payload.message.message; 
-          }
-
           //ignore first batch of notifications for admin as they are irrelevant
-          payload.usernameFromGroup = payload.group.split('/').pop();
-          if( payload.message === 'joined' && payload.username !== payload.usernameFromGroup ){
+          payload.usernameFromGroup = payload.group;
+          if( payload.message === 'joined' && payload.sender !== payload.usernameFromGroup ){
             console.log('suppressing notification display');
             return;
           }
@@ -48,7 +43,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             messageToDisplay = payload.usernameFromGroup + ' joined';
           }
           else{
-            messageToDisplay = payload.message;
+            messageToDisplay = payload.details;
           }
 
           var demoView = app.$.demoView;
@@ -88,7 +83,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           if( demoData ){
              demoData.lastNotificationTimestamp = new Date().getTime();
           }
-        }, 5000); 
+        }, 5000);
       }
     });
 
@@ -168,6 +163,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   }
   else{
     finishLazyLoading();
-  }  
+  }
 
 })(document);
