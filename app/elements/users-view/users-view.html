@@ -101,8 +101,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           });
           _this.users = usernames.sort().map(function(username){ return usersMap[username];});
         }).catch( function(error){
-          console.log('error loading users for users-view: ' + error);
-          _this.fire('bridgeit-error', {error: Error('Could not fetch users list: ' + error.responseText)});
+          console.error('Error loading users for users-view: ' + error.toSource());
         });
       }
     });

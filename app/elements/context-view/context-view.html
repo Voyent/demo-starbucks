@@ -183,10 +183,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }).then(function(){
             _this.loaded = true;
           }).catch(function(error){
-            _this.fire('bridgeit-error', {error: Error('Could not fetch template messages: ' + error)});
+            _this.fire('message-error', 'Could not fetch template messages: ' + error.toSource());
           });
         }).catch(function(error){
-          _this.fire('bridgeit-error', {error: Error('Could not fetch temperature settings: ' + error)});
+          _this.fire('message-error', 'Could not fetch temperature settings: ' + error.toSource());
         });
         
       },
@@ -214,7 +214,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             id: this.temperatureSettingsDoc._id, 
             document: this.temperatureSettingsDoc
           }).catch(function(error){
-            _this.fire('bridgeit-error', {error: Error('Temperature update failed: ' + error)});
+            _this.fire('message-error', 'Temperature update failed: ' + error.toSource());
           });
         }
       },
