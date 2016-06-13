@@ -31,3 +31,7 @@ paper-tabs[noink][no-bar] paper-tab.iron-selected {
 paper-tabs[align-bottom] {
 	box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.15);
 }
+
+#mainToolbar{
+	background-color: #027244;
+}

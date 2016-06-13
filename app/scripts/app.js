@@ -26,41 +26,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     };
 
-    // Listen for template bound event to know when bindings
-    // have resolved and content has been stamped to the page
-    app.addEventListener('dom-change', function() {
-      console.log('Initializing demo');
-      if( bridgeit.io.auth.isLoggedIn()){
-        setTimeout(function(){
-          setupNotificationListener();
-          //initialize lastNotificationTimestamp so user list displays
-          var demoData = app.$.demoView.$$('#demoData');
-          if( demoData ){
-             demoData.lastNotificationTimestamp = new Date().getTime();
-          }
-        }, 5000); 
-      }
-    });
-
-    // Startup the Notification Push Listener after login
-    window.addEventListener('onAfterLogin', function(){
-      console.log('onAfterLogin callback: configuring notifications');
-      setupNotificationListener();
-    });
-
     function setupNotificationListener(){
       bridgeit.xio.push.attach('http://'+app.host+'/pushio/demos/realms/starbucks', bridgeit.io.auth.getLastKnownUsername());
       bridgeit.xio.push.addListener(function (payload) {
           console.log('Notification: ', payload);
 
-          //normalize payload TODO!!
-          if( payload.message && typeof payload.message === 'object' && payload.message.message){
-            payload.message = payload.message.message; 
-          }
-
           //ignore first batch of notifications for admin as they are irrelevant
-          payload.usernameFromGroup = payload.group.split('/').pop();
-          if( payload.message === 'joined' && payload.username !== payload.usernameFromGroup ){
+          payload.usernameFromGroup = payload.group;
+          if( payload.message === 'joined' && payload.sender !== payload.usernameFromGroup ){
             console.log('suppressing notification display');
             return;
           }
@@ -70,7 +43,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             messageToDisplay = payload.usernameFromGroup + ' joined';
           }
           else{
-            messageToDisplay = payload.message;
+            messageToDisplay = payload.details;
           }
 
           var demoView = app.$.demoView;
@@ -98,7 +71,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       window.initializePushGroups(); //delegates to index.html for admins or client.html for regular users
     }
 
-    
+    // Listen for template bound event to know when bindings
+    // have resolved and content has been stamped to the page
+    app.addEventListener('dom-change', function() {
+      console.log('Initializing demo');
+      if( bridgeit.io.auth.isLoggedIn()){
+        setTimeout(function(){
+          setupNotificationListener();
+          //initialize lastNotificationTimestamp so user list displays
+          var demoData = app.$.demoView.$$('#demoData');
+          if( demoData ){
+             demoData.lastNotificationTimestamp = new Date().getTime();
+          }
+        }, 5000);
+      }
+    });
+
+    // Startup the Notification Push Listener after login
+    window.addEventListener('onAfterLogin', function(){
+      console.log('onAfterLogin callback: configuring notifications');
+      setupNotificationListener();
+    });
 
     // See https://github.com/Polymer/polymer/issues/1381
     window.addEventListener('WebComponentsReady', function() {
@@ -113,9 +106,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     window.addEventListener('bridgeit-session-expired', function(e){
       console.log('demo app received event bridgeit-session-expired', e);
       bridgeit.xio.push.disconnect();
+      window.alert('Session Expired');
     });
-
-    
 
     // Main area's paper-scroll-header-panel custom condensing transformation of
     // the appName in the middle-container and the bottom title in the bottom-container.
@@ -148,6 +140,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       if (drawerPanel.narrow) {
         drawerPanel.closeDrawer();
       }
+      bridgeit.io.auth.updateLastActiveTimestamp();
     };
 
     // Scroll page to top and expand header
@@ -170,6 +163,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   }
   else{
     finishLazyLoading();
-  }  
+  }
 
 })(document);
