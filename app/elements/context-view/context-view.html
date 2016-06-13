@@ -64,6 +64,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 30px;
         height: 30px;
       }
+      paper-icon-button.confirm {
+        right:20px;
+      }
       .temp-control{
         display: inline-block;
         width: 50%;
@@ -81,10 +84,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .templates .row:first-child .tbl-header{
         border-bottom: 1px solid #DDD;
         border-right: 1px solid #DDD;
-      }
-      bridgeit-document-property-text-editor{
-        min-height: 243px;
-        min-width: 546px;
       }
     </style>
 
@@ -114,7 +113,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
         </div>
       </paper-card>
-      
+
       <paper-card heading="Templates">
         <div class="card-content">
           <div class="templates">
@@ -126,42 +125,57 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="row">
               <div class="tbl-header">Male</div>
               <div class="cell">
-                <bridgeit-document document-id="templateMessages" attr-to-display="hotMale" document="{{templateMessagesDoc}}">
-                </bridgeit-document>
-                <paper-icon-button title="Edit" icon="create" on-click="editTemplateMaleHot"></paper-icon-button>
+                <template is="dom-if" if="{{editMaleHotTemplate}}">
+                  <paper-input value="{{hotMaleTemplate}}"></paper-input>
+                  <paper-icon-button title="Save" icon="check" class="confirm" on-click="saveMaleHotTemplate"></paper-icon-button>
+                  <paper-icon-button title="Cancel" icon="close" on-click="toggleEditMaleHot"></paper-icon-button>
+                </template>
+                <template is="dom-if" if="{{!editMaleHotTemplate}}">
+                  <span>{{hotMaleTemplate}}</span>
+                  <paper-icon-button title="Edit" icon="create" on-click="toggleEditMaleHot"></paper-icon-button>
+                </template>
               </div>
               <div class="cell">
-                <bridgeit-document document-id="templateMessages" attr-to-display="coldMale" document="{{templateMessagesDoc}}">
-                </bridgeit-document>
-                <paper-icon-button title="Edit" icon="create" on-click="editTemplateMaleCold"></paper-icon-button>
+                <template is="dom-if" if="{{editMaleColdTemplate}}">
+                  <paper-input value="{{coldMaleTemplate}}"></paper-input>
+                  <paper-icon-button title="Save" icon="check" class="confirm" on-click="saveMaleColdTemplate"></paper-icon-button>
+                  <paper-icon-button title="Cancel" icon="close" on-click="toggleEditMaleCold"></paper-icon-button>
+                </template>
+                <template is="dom-if" if="{{!editMaleColdTemplate}}">
+                  <span>{{coldMaleTemplate}}</span>
+                  <paper-icon-button title="Edit" icon="create" on-click="toggleEditMaleCold"></paper-icon-button>
+                </template>
               </div>
              </div>
              <div class="row">
               <div class="tbl-header">Female</div>
               <div class="cell">
-                <bridgeit-document document-id="templateMessages" attr-to-display="hotFemale" document="{{templateMessagesDoc}}">
-                </bridgeit-document>
-                <paper-icon-button title="Edit" icon="create" on-click="editTemplateFemaleHot"></paper-icon-button>
+                <template is="dom-if" if="{{editFemaleHotTemplate}}">
+                  <paper-input value="{{hotFemaleTemplate}}"></paper-input>
+                  <paper-icon-button title="Save" icon="check" class="confirm" on-click="saveFemaleHotTemplate"></paper-icon-button>
+                  <paper-icon-button title="Cancel" icon="close" on-click="toggleEditFemaleHot"></paper-icon-button>
+                </template>
+                <template is="dom-if" if="{{!editFemaleHotTemplate}}">
+                  <span>{{hotFemaleTemplate}}</span>
+                  <paper-icon-button title="Edit" icon="create" on-click="toggleEditFemaleHot"></paper-icon-button>
+                </template>
               </div>
               <div class="cell">
-                <bridgeit-document document-id="templateMessages" attr-to-display="coldFemale" document="{{templateMessagesDoc}}">
-                </bridgeit-document>
-                <paper-icon-button title="Edit" icon="create" on-click="editTemplateFemaleCold"></paper-icon-button>
+                <template is="dom-if" if="{{editFemaleColdTemplate}}">
+                  <paper-input value="{{coldFemaleTemplate}}"></paper-input>
+                  <paper-icon-button title="Save" icon="check" class="confirm" on-click="saveFemaleColdTemplate"></paper-icon-button>
+                  <paper-icon-button title="Cancel" icon="close" on-click="toggleEditFemaleCold"></paper-icon-button>
+                </template>
+                <template is="dom-if" if="{{!editFemaleColdTemplate}}">
+                  <span>{{coldFemaleTemplate}}</span>
+                  <paper-icon-button title="Edit" icon="create" on-click="toggleEditFemaleCold"></paper-icon-button>
+                </template>
+              </div>
               </div>
             </div>
           </div>
         </div>
       </paper-card>
-
-      <paper-dialog opened="{{showEditTemplateDialog}}">
-        <h2>Edit Template <span>{{currentDocumentProperty}}</span></h2>
-        <bridgeit-document-property-text-editor document="{{templateMessagesDoc}}" document-property="{{currentDocumentProperty}}">
-        </bridgeit-document-property-text-editor>
-        <div class="buttons">
-          <paper-button on-click="closeEditTemplateDialog">Close</paper-button>
-        </div>
-      </paper-dialog>
-
     </template>
 
   </template>
@@ -180,6 +194,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           _this.thresholdTemp = doc.threshold;
           return bridgeit.io.documents.getDocument({id: 'templateMessages'}).then(function(doc){
             _this.templateMessagesDoc = doc;
+            _this.hotMaleTemplate = doc.hotMale;
+            _this.coldMaleTemplate = doc.coldMale;
+            _this.hotFemaleTemplate = doc.hotFemale;
+            _this.coldFemaleTemplate = doc.coldFemale;
           }).then(function(){
             _this.loaded = true;
           }).catch(function(error){
@@ -188,7 +206,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }).catch(function(error){
           _this.fire('message-error', 'Could not fetch temperature settings: ' + error.toSource());
         });
-        
+
       },
 
       observers: ['tempChanged(currentTemp,thresholdTemp)'],
@@ -200,18 +218,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         currentTemp: {type: Number, notify: true},
         thresholdTemp: {type: Number, notify: true},
         templateMessagesDoc: {type: Object},
-        currentDocumentProperty: {type: Object, notify: true},
-        showEditTemplateDialog: {type: Boolean, computed: '_computeShowEditTemplateDialog(currentDocumentProperty)'}
+        hotMaleTemplate: { type: String, value: '', notify: true },
+        coldMaleTemplate: { type: String, value: '', notify: true },
+        hotFemaleTemplate: { type: String, value: '', notify: true },
+        coldFemaleTemplate: { type: String, value: '', notify: true },
+        editMaleHotTemplate: { type: Boolean, value: false, notify: true },
+        editMaleColdTemplate: { type: Boolean, value: false, notify: true },
+        editFemaleHotTemplate: { type: Boolean, value: false, notify: true },
+        editFemaleColdTemplate: { type: Boolean, value: false, notify: true }
       },
 
-      tempChanged: function(currentTemp,thresholdTemp){
+      tempChanged: function(currentTemp,thresholdTemp) {
         if( this.loaded && this.visible ){
           var _this = this;
           this.fire('temp-changed', {currentTemp: currentTemp, thresholdTemp: thresholdTemp});
           this.temperatureSettingsDoc.current = currentTemp;
           this.temperatureSettingsDoc.threshold = thresholdTemp;
           bridgeit.io.documents.updateDocument({
-            id: this.temperatureSettingsDoc._id, 
+            id: this.temperatureSettingsDoc._id,
             document: this.temperatureSettingsDoc
           }).catch(function(error){
             _this.fire('message-error', 'Temperature update failed: ' + error.toSource());
@@ -219,32 +243,66 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
-      editTemplateMaleHot: function(){
-        console.log('editTemplateMaleHot');
-        this.currentDocumentProperty = 'hotMale';
+      toggleEditMaleHot: function(){
+        this.editMaleHotTemplate = !this.editMaleHotTemplate;
       },
 
-      editTemplateMaleCold: function(){
-        console.log('editTemplateMaleCold');
-        this.currentDocumentProperty = 'coldMale';
+      toggleEditMaleCold: function(){
+        this.editMaleColdTemplate = !this.editMaleColdTemplate;
       },
 
-      editTemplateFemaleHot: function(){
-        console.log('editTemplateFemaleHot');
-        this.currentDocumentProperty = 'hotFemale';
+      toggleEditFemaleHot: function(){
+        this.editFemaleHotTemplate = !this.editFemaleHotTemplate;
       },
 
-      editTemplateFemaleCold: function(){
-        console.log('editTemplateFemaleCold');
-        this.currentDocumentProperty = 'coldFemale';
+      toggleEditFemaleCold: function(){
+        this.editFemaleColdTemplate = !this.editFemaleColdTemplate;
       },
 
-      closeEditTemplateDialog: function(){
-        this.currentDocumentProperty = null;
+      saveMaleHotTemplate: function() {
+        if (this.templateMessagesDoc.hotMale === this.hotMaleTemplate) {
+          return;
+        }
+        this.set('templateMessagesDoc.hotMale',this.hotMaleTemplate);
+        this.saveTemplateMessages();
+        this.toggleEditMaleHot();
       },
 
-      _computeShowEditTemplateDialog: function(currentDocumentProperty){
-        return !!currentDocumentProperty;
+      saveMaleColdTemplate: function() {
+        if (this.templateMessagesDoc.coldMale === this.coldMaleTemplate) {
+          return;
+        }
+        this.set('templateMessagesDoc.coldMale',this.coldMaleTemplate);
+        this.saveTemplateMessages();
+        this.toggleEditMaleCold();
+      },
+
+      saveFemaleHotTemplate: function() {
+        if (this.templateMessagesDoc.hotFemale === this.hotFemaleTemplate) {
+          return;
+        }
+        this.set('templateMessagesDoc.hotFemale',this.hotFemaleTemplate);
+        this.saveTemplateMessages();
+        this.toggleEditFemaleHot();
+      },
+
+      saveFemaleColdTemplate: function() {
+        if (this.templateMessagesDoc.coldFemale === this.coldFemaleTemplate) {
+          return;
+        }
+        this.set('templateMessagesDoc.coldFemale',this.coldFemaleTemplate);
+        this.saveTemplateMessages();
+        this.toggleEditFemaleCold();
+      },
+
+      saveTemplateMessages: function() {
+        var _this = this;
+        bridgeit.io.documents.updateDocument({
+          id: this.templateMessagesDoc._id,
+          document: this.templateMessagesDoc
+        }).catch(function(error){
+          _this.fire('bridgeit-error', {error: Error('Template update failed: ' + error)});
+        });
       }
     });
   })();
