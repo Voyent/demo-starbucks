@@ -17,7 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
-      bridgeit-log-viewer {
+      voyent-log-viewer {
         --log-viewer-table: {
           font-size: 11px;
           width: 100%;
@@ -43,8 +43,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <template is="dom-if" if="{{visible}}">
       <paper-button raised colored on-click="fetchLogs" style="float:right;margin-top: -44px;">Fetch Logs</paper-button>
       <template is="dom-if" if="{{visible}}">
-        <bridgeit-log-viewer id="logViewer" header="true" footer="true" paginator="true" pagesize="25">
-        </bridgeit-log-viewer>
+        <voyent-log-viewer id="logViewer" header="true" footer="true" paginator="true" pagesize="25">
+        </voyent-log-viewer>
       </template>
     </template>
   </template>

@@ -84,7 +84,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       loadUsers: function(){
         var _this = this;
 
-        bridgeit.io.admin.getRealmUsers().then( function(users){
+        voyent.io.admin.getRealmUsers().then( function(users){
           console.log('found the following users: ' + JSON.stringify(users));
           var usersMap = {};
           var usernames = [];

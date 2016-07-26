@@ -27,8 +27,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     };
 
     function setupNotificationListener(){
-      bridgeit.xio.push.attach('http://'+app.host+'/pushio/demos/realms/starbucks', bridgeit.io.auth.getLastKnownUsername());
-      bridgeit.xio.push.addListener(function (payload) {
+      voyent.xio.push.attach('http://'+app.host+'/pushio/demos/realms/starbucks', voyent.io.auth.getLastKnownUsername());
+      voyent.xio.push.addListener(function (payload) {
           console.log('Notification: ', payload);
 
           //ignore first batch of notifications for admin as they are irrelevant
@@ -75,7 +75,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     // have resolved and content has been stamped to the page
     app.addEventListener('dom-change', function() {
       console.log('Initializing demo');
-      if( bridgeit.io.auth.isLoggedIn()){
+      if( voyent.io.auth.isLoggedIn()){
         setTimeout(function(){
           setupNotificationListener();
           //initialize lastNotificationTimestamp so user list displays
@@ -98,14 +98,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // imports are loaded and elements have been registered
     });
 
-    window.addEventListener('bridgeit-access-token-refreshed', function(e){
-      console.log('demo app received event bridgeit-access-token-refreshed', e);
-      bridgeit.xio.push.refreshConnection();
+    window.addEventListener('voyent-access-token-refreshed', function(e){
+      console.log('demo app received event voyent-access-token-refreshed', e);
+      voyent.xio.push.refreshConnection();
     });
 
-    window.addEventListener('bridgeit-session-expired', function(e){
-      console.log('demo app received event bridgeit-session-expired', e);
-      bridgeit.xio.push.disconnect();
+    window.addEventListener('voyent-session-expired', function(e){
+      console.log('demo app received event voyent-session-expired', e);
+      voyent.xio.push.disconnect();
       window.alert('Session Expired');
     });
 
@@ -140,7 +140,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       if (drawerPanel.narrow) {
         drawerPanel.closeDrawer();
       }
-      bridgeit.io.auth.updateLastActiveTimestamp();
+      voyent.io.auth.updateLastActiveTimestamp();
     };
 
     // Scroll page to top and expand header

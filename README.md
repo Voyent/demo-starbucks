@@ -1,4 +1,4 @@
-## BridgeIt Starbucks Demo
+## Voyent Starbucks Demo
 
 > A demo with coffee shops.
 
