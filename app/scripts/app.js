@@ -17,7 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var app = document.querySelector('#app');
 
     //set default host;
-    app.host = 'dev.bridgeit.io';
+    app.host = 'dev.voyent.cloud';
 
     app.displayInstalledToast = function() {
       // Check to make sure caching is actually enabled—it won't be in the dev environment.
