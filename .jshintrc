@@ -19,6 +19,6 @@
     "Platform": true,
     "page": true,
     "app": true,
-    "bridgeit": true
+    "voyent": true
   }
 }
