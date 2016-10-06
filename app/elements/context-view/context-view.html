@@ -188,11 +188,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready: function(){
         var _this = this;
-        voyent.io.documents.getDocument({id: 'temperatureSettings'}).then(function(doc){
+        voyent.io.docs.getDocument({id: 'temperatureSettings'}).then(function(doc){
           _this.temperatureSettingsDoc = doc;
           _this.currentTemp = doc.current;
           _this.thresholdTemp = doc.threshold;
-          return voyent.io.documents.getDocument({id: 'templateMessages'}).then(function(doc){
+          return voyent.io.docs.getDocument({id: 'templateMessages'}).then(function(doc){
             _this.templateMessagesDoc = doc;
             _this.hotMaleTemplate = doc.hotMale;
             _this.coldMaleTemplate = doc.coldMale;
@@ -234,7 +234,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.fire('temp-changed', {currentTemp: currentTemp, thresholdTemp: thresholdTemp});
           this.temperatureSettingsDoc.current = currentTemp;
           this.temperatureSettingsDoc.threshold = thresholdTemp;
-          voyent.io.documents.updateDocument({
+          voyent.io.docs.updateDocument({
             id: this.temperatureSettingsDoc._id,
             document: this.temperatureSettingsDoc
           }).catch(function(error){
@@ -297,7 +297,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       saveTemplateMessages: function() {
         var _this = this;
-        voyent.io.documents.updateDocument({
+        voyent.io.docs.updateDocument({
           id: this.templateMessagesDoc._id,
           document: this.templateMessagesDoc
         }).catch(function(error){
